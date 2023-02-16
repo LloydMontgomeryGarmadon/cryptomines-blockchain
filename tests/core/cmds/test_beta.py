@@ -83,7 +83,7 @@ def generate_example_submission_data(beta_root_path: Path, versions: int, logs: 
     for version in range(versions):
         version_path = beta_root_path / str(version)
         version_path.mkdir()
-        chia_blockchain_logs = version_path / "chia-blockchain"
+        chia_blockchain_logs = version_path / "cryptomines-blockchain"
         plotting_logs = version_path / "plotting"
         chia_blockchain_logs.mkdir()
         plotting_logs.mkdir()
@@ -347,7 +347,7 @@ def test_prepare_submission(
         with zipfile.ZipFile(submission_file) as zip_file:
             all_files = [Path(info.filename) for info in zip_file.filelist]
             for version in range(versions):
-                chia_blockchain_logs = Path("chia-blockchain")
+                chia_blockchain_logs = Path("cryptomines-blockchain")
                 plotting_logs = Path("plotting")
                 for i in range(logs):
                     assert chia_blockchain_logs / f"beta_{i}.log" in all_files
