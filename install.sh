@@ -39,20 +39,6 @@ do
   esac
 done
 
-UBUNTU=false
-DEBIAN=false
-if [ "$(uname)" = "Linux" ]; then
-  #LINUX=1
-  if command -v apt-get >/dev/null; then
-    OS_ID=$(lsb_release -is)
-    if [ "$OS_ID" = "Debian" ]; then
-      DEBIAN=true
-    else
-      UBUNTU=true
-    fi
-  fi
-fi
-
 # Check for non 64 bit ARM64/Raspberry Pi installs
 if [ "$(uname -m)" = "armv7l" ]; then
   echo ""
@@ -60,31 +46,6 @@ if [ "$(uname -m)" = "armv7l" ]; then
   echo "The Cryptomines Blockchain requires a 64 bit OS and this is 32 bit armv7l"
   echo "Exiting."
   exit 1
-fi
-# Get submodules
-git submodule update --init mozilla-ca
-
-UBUNTU_PRE_20=0
-UBUNTU_20=0
-UBUNTU_21=0
-UBUNTU_22=0
-
-if $UBUNTU; then
-  LSB_RELEASE=$(lsb_release -rs)
-  # In case Ubuntu minimal does not come with bc
-  if ! command -v bc > /dev/null 2>&1; then
-    sudo apt install bc -y
-  fi
-  # Mint 20.04 responds with 20 here so 20 instead of 20.04
-  if [ "$(echo "$LSB_RELEASE<20" | bc)" = "1" ]; then
-    UBUNTU_PRE_20=1
-  elif [ "$(echo "$LSB_RELEASE<21" | bc)" = "1" ]; then
-    UBUNTU_20=1
-  elif [ "$(echo "$LSB_RELEASE<22" | bc)" = "1" ]; then
-    UBUNTU_21=1
-  else
-    UBUNTU_22=1
-  fi
 fi
 
 install_python3_and_sqlite3_from_source_with_yum() {
@@ -183,39 +144,32 @@ find_openssl() {
   set -e
 }
 
+# Get submodules
+git submodule update --init mozilla-ca
+
 # Manage npm and other install requirements on an OS specific basis
 if [ "$SKIP_PACKAGE_INSTALL" = "1" ]; then
   echo "Skipping system package installation"
 elif [ "$(uname)" = "Linux" ]; then
   #LINUX=1
-  if [ "$UBUNTU_PRE_20" = "1" ]; then
-    # Ubuntu
-    echo "Installing on Ubuntu pre 20.*."
+  #APT
+  if command -v apt-get >/dev/null; then
+    echo "Installing with apt."
+    case $(lsb_release -is) in
+      Debian| Ubuntu| Linuxmint);;
+      *)
+        echo "WARNING: Your operating system has not been tested."
+      ;;
+    esac
     sudo apt-get update
     # distutils must be installed as well to avoid a complaint about ensurepip while
     # creating the venv.  This may be related to a mis-check while using or
     # misconfiguration of the secondary Python version 3.7.  The primary is Python 3.6.
-    sudo apt-get install -y python3.7-venv python3.7-distutils openssl
-  elif [ "$UBUNTU_20" = "1" ]; then
-    echo "Installing on Ubuntu 20.*."
-    sudo apt-get update
-    sudo apt-get install -y python3.8-venv openssl
-  elif [ "$UBUNTU_21" = "1" ]; then
-    echo "Installing on Ubuntu 21.*."
-    sudo apt-get update
-    sudo apt-get install -y python3.9-venv openssl
-  elif [ "$UBUNTU_22" = "1" ]; then
-    echo "Installing on Ubuntu 22.* or newer."
-    sudo apt-get update
-    sudo apt-get install -y python3.10-venv openssl
-  elif [ "$DEBIAN" = "true" ]; then
-    echo "Installing on Debian."
-    sudo apt-get update
-    sudo apt-get install -y python3-venv openssl
+    sudo apt-get install -y python3-venv python3-distutils openssl bc
   elif type pacman >/dev/null 2>&1 && [ -f "/etc/arch-release" ]; then
     # Arch Linux
     # Arch provides latest python version. User will need to manually install python 3.9 if it is not present
-    echo "Installing on Arch Linux."
+    echo "Installing with pacman."
     case $(uname -m) in
       x86_64|aarch64)
         sudo pacman ${PACMAN_AUTOMATED} -S --needed git openssl
@@ -227,23 +181,23 @@ elif [ "$(uname)" = "Linux" ]; then
     esac
   elif type yum >/dev/null 2>&1 && [ ! -f "/etc/redhat-release" ] && [ ! -f "/etc/centos-release" ] && [ ! -f "/etc/fedora-release" ]; then
     # AMZN 2
-    echo "Installing on Amazon Linux 2."
+    echo "Installing python3 and sqlite3 from source."
     if ! command -v python3.9 >/dev/null 2>&1; then
       install_python3_and_sqlite3_from_source_with_yum
     fi
   elif type yum >/dev/null 2>&1 && [ -f "/etc/centos-release" ]; then
     # CentOS
-    echo "Install on CentOS."
+    echo "Installing python3 and sqlite3 from source."
     if ! command -v python3.9 >/dev/null 2>&1; then
       install_python3_and_sqlite3_from_source_with_yum
     fi
   elif type yum >/dev/null 2>&1 && [ -f "/etc/redhat-release" ] && grep Rocky /etc/redhat-release; then
-    echo "Installing on Rocky."
+    echo "Installing python3 and sqlite3 from source."
     # TODO: make this smarter about getting the latest version
     sudo yum install --assumeyes python39 openssl
   elif type yum >/dev/null 2>&1 && [ -f "/etc/redhat-release" ] || [ -f "/etc/fedora-release" ]; then
     # Redhat or Fedora
-    echo "Installing on Redhat/Fedora."
+    echo "Installing with yum."
     if ! command -v python3.9 >/dev/null 2>&1; then
       sudo yum install -y python39 openssl
     fi
