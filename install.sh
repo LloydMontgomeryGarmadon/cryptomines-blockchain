@@ -30,8 +30,8 @@ do
     # development
     d) EXTRAS=${EXTRAS}dev,;;
     # simple install
-    s) SKIP_PACKAGE_INSTALL=1;;
-    p) PLOTTER_INSTALL=1;;
+    s) SKIP_PACKAGE_INSTALL=true;;
+    p) PLOTTER_INSTALL=true;;
     # legacy keyring
     l) EXTRAS=${EXTRAS}legacy_keyring,;;
     h) usage; exit 0;;
@@ -91,66 +91,11 @@ install_python3_and_sqlite3_from_source_with_yum() {
   cd "$CURRENT_WD"
 }
 
-
-
-find_python() {
-  set +e
-  unset BEST_VERSION
-  for V in 311 3.11 310 3.10 39 3.9 38 3.8 37 3.7 3; do
-    if command -v python$V >/dev/null; then
-      if [ "$BEST_VERSION" = "" ]; then
-        BEST_VERSION=$V
-      fi
-    fi
-  done
-
-  if [ -n "$BEST_VERSION" ]; then
-    INSTALL_PYTHON_VERSION="$BEST_VERSION"
-    INSTALL_PYTHON_PATH=python${INSTALL_PYTHON_VERSION}
-    PY3_VER=$($INSTALL_PYTHON_PATH --version | cut -d ' ' -f2)
-    PYTHON_MAJOR_VER=$(echo "$PY3_VER" | cut -d'.' -f1)
-    PYTHON_MINOR_VER=$(echo "$PY3_VER" | cut -d'.' -f2)
-  fi
-  set -e
-}
-
-find_sqlite() {
-  set +e
-  if [ -n "$INSTALL_PYTHON_PATH" ]; then
-    # Check sqlite3 version bound to python
-    SQLITE_VERSION=$($INSTALL_PYTHON_PATH -c 'import sqlite3; print(sqlite3.sqlite_version)')
-    SQLITE_MAJOR_VER=$(echo "$SQLITE_VERSION" | cut -d'.' -f1)
-    SQLITE_MINOR_VER=$(echo "$SQLITE_VERSION" | cut -d'.' -f2)
-  fi
-  set -e
-}
-
-find_openssl() {
-  set +e
-  if [ -n "$INSTALL_PYTHON_PATH" ]; then
-    # Check openssl version python will use
-    OPENSSL_VERSION_STRING=$($INSTALL_PYTHON_PATH -c 'import ssl; print(ssl.OPENSSL_VERSION)')
-    OPENSSL_VERSION_INT=$($INSTALL_PYTHON_PATH -c 'import ssl; print(ssl.OPENSSL_VERSION_NUMBER)')
-  fi
-  set -e
-}
-
-# You can specify preferred python version by exporting `INSTALL_PYTHON_VERSION`
-# e.g. `export INSTALL_PYTHON_VERSION=3.8`
-INSTALL_PYTHON_PATH=
-PYTHON_MAJOR_VER=
-PYTHON_MINOR_VER=
-SQLITE_VERSION=
-SQLITE_MAJOR_VER=
-SQLITE_MINOR_VER=
-OPENSSL_VERSION_STRING=
-OPENSSL_VERSION_INT=
-
 # Get submodules
 git submodule update --init mozilla-ca
 
 # Manage npm and other install requirements on an OS specific basis
-if [ "$SKIP_PACKAGE_INSTALL" = "1" ]; then
+if $SKIP_PACKAGE_INSTALL then
   echo "Skipping system package installation"
 elif [ "$(uname)" = "Linux" ]; then
   #LINUX
@@ -201,7 +146,9 @@ elif [ "$(uname)" = "Linux" ]; then
       sudo yum install -y python39 openssl
     fi
   fi
+
 elif [ "$(uname)" = "Darwin" ]; then
+  #MacOS
   echo "Installing on macOS."
   if ! type brew >/dev/null 2>&1; then
     echo "Installation currently requires brew on macOS - https://brew.sh/"
@@ -212,12 +159,67 @@ elif [ "$(uname)" = "Darwin" ]; then
 fi
 
 if [ "$(uname)" = "OpenBSD" ]; then
+  #OpenBSD
   export MAKE=${MAKE:-gmake}
   export BUILD_VDF_CLIENT=${BUILD_VDF_CLIENT:-N}
 elif [ "$(uname)" = "FreeBSD" ]; then
+  #FreeBSD
   export MAKE=${MAKE:-gmake}
   export BUILD_VDF_CLIENT=${BUILD_VDF_CLIENT:-N}
 fi
+
+# You can specify preferred python version by exporting `INSTALL_PYTHON_VERSION`
+# e.g. `export INSTALL_PYTHON_VERSION=3.8`
+INSTALL_PYTHON_PATH=
+PYTHON_MAJOR_VER=
+PYTHON_MINOR_VER=
+SQLITE_VERSION=
+SQLITE_MAJOR_VER=
+SQLITE_MINOR_VER=
+OPENSSL_VERSION_STRING=
+OPENSSL_VERSION_INT=
+
+find_python() {
+  set +e
+  unset BEST_VERSION
+  for V in 311 3.11 310 3.10 39 3.9 38 3.8 37 3.7 3; do
+    if command -v python$V >/dev/null; then
+      if [ "$BEST_VERSION" = "" ]; then
+        BEST_VERSION=$V
+      fi
+    fi
+  done
+
+  if [ -n "$BEST_VERSION" ]; then
+    INSTALL_PYTHON_VERSION="$BEST_VERSION"
+    INSTALL_PYTHON_PATH=python${INSTALL_PYTHON_VERSION}
+    PY3_VER=$($INSTALL_PYTHON_PATH --version | cut -d ' ' -f2)
+    PYTHON_MAJOR_VER=$(echo "$PY3_VER" | cut -d'.' -f1)
+    PYTHON_MINOR_VER=$(echo "$PY3_VER" | cut -d'.' -f2)
+  fi
+  set -e
+}
+
+find_sqlite() {
+  set +e
+  if [ -n "$INSTALL_PYTHON_PATH" ]; then
+    # Check sqlite3 version bound to python
+    SQLITE_VERSION=$($INSTALL_PYTHON_PATH -c 'import sqlite3; print(sqlite3.sqlite_version)')
+    SQLITE_MAJOR_VER=$(echo "$SQLITE_VERSION" | cut -d'.' -f1)
+    SQLITE_MINOR_VER=$(echo "$SQLITE_VERSION" | cut -d'.' -f2)
+  fi
+  set -e
+}
+
+find_openssl() {
+  set +e
+  if [ -n "$INSTALL_PYTHON_PATH" ]; then
+    # Check openssl version python will use
+    OPENSSL_VERSION_STRING=$($INSTALL_PYTHON_PATH -c 'import ssl; print(ssl.OPENSSL_VERSION)')
+    OPENSSL_VERSION_INT=$($INSTALL_PYTHON_PATH -c 'import ssl; print(ssl.OPENSSL_VERSION_NUMBER)')
+  fi
+  set -e
+}
 
 if [ "$INSTALL_PYTHON_VERSION" = "" ]; then
   echo "Searching available python executables..."
@@ -295,7 +297,7 @@ python -m pip install wheel
 python -m pip install --extra-index-url https://pypi.chia.net/simple/ miniupnpc==2.2.2
 python -m pip install -e ."${EXTRAS}" --extra-index-url https://pypi.chia.net/simple/
 
-if [ -n "$PLOTTER_INSTALL" ]; then
+if $PLOTTER_INSTALL then
   set +e
   PREV_VENV="$VIRTUAL_ENV"
   export VIRTUAL_ENV="venv"
