@@ -95,7 +95,7 @@ install_python3_and_sqlite3_from_source_with_yum() {
 git submodule update --init mozilla-ca
 
 # Manage npm and other install requirements on an OS specific basis
-if $SKIP_PACKAGE_INSTALL then
+if $SKIP_PACKAGE_INSTALL; then
   echo "Skipping system package installation"
 elif [ "$(uname)" = "Linux" ]; then
   #LINUX
