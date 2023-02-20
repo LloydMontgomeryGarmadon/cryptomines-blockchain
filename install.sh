@@ -297,7 +297,7 @@ python -m pip install wheel
 python -m pip install --extra-index-url https://pypi.chia.net/simple/ miniupnpc==2.2.2
 python -m pip install -e ."${EXTRAS}" --extra-index-url https://pypi.chia.net/simple/
 
-if $PLOTTER_INSTALL then
+if $PLOTTER_INSTALL; then
   set +e
   PREV_VENV="$VIRTUAL_ENV"
   export VIRTUAL_ENV="venv"
