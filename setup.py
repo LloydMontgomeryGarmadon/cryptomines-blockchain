@@ -6,7 +6,7 @@ import sys
 from setuptools import setup
 
 dependencies = [
-    "aiofiles==23.1.0",  # Async IO for files
+    "aiofiles==23.2.1",  # Async IO for files
     "anyio==3.6.2",
     "boto3==1.26.131",  # AWS S3 for DL s3 plugin
     "blspy==1.0.16",  # Signature library
