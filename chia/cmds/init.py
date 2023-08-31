@@ -42,7 +42,7 @@ def init_cmd(
     - Run `chia init -c [directory]` on your remote harvester,
       where [directory] is the the copy of your Farming Machine CA directory
     - Get more details on remote harvester on Chia wiki:
-      https://github.com/Chia-Network/chia-blockchain/wiki/Farming-on-many-machines
+      https://github.com/Chia-Network/cryptomines-blockchain/wiki/Farming-on-many-machines
     """
     from pathlib import Path
 

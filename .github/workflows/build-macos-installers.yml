@@ -210,18 +210,18 @@ jobs:
       - name: Prepare GUI cache
         id: gui-ref
         run: |
-          gui_ref=$(git submodule status chia-blockchain-gui | sed -e 's/^ //g' -e 's/ chia-blockchain-gui.*$//g')
+          gui_ref=$(git submodule status cryptomines-blockchain-gui | sed -e 's/^ //g' -e 's/ cryptomines-blockchain-gui.*$//g')
           echo "${gui_ref}"
           echo "GUI_REF=${gui_ref}" >> "$GITHUB_OUTPUT"
-          echo "rm -rf ./chia-blockchain-gui"
-          rm -rf ./chia-blockchain-gui
+          echo "rm -rf ./cryptomines-blockchain-gui"
+          rm -rf ./cryptomines-blockchain-gui
 
       - name: Cache GUI
         uses: actions/cache@v3
         id: cache-gui
         with:
-          path: ./chia-blockchain-gui
-          key: ${{ runner.os }}-${{ matrix.os.name }}-chia-blockchain-gui-${{ steps.gui-ref.outputs.GUI_REF }}
+          path: ./cryptomines-blockchain-gui
+          key: ${{ runner.os }}-${{ matrix.os.name }}-cryptomines-blockchain-gui-${{ steps.gui-ref.outputs.GUI_REF }}
 
       - if: steps.cache-gui.outputs.cache-hit != 'true'
         name: Build GUI
@@ -331,4 +331,4 @@ jobs:
 
       - name: Remove working files to exclude from cache
         run: |
-          rm -rf ./chia-blockchain-gui/packages/gui/daemon
+          rm -rf ./cryptomines-blockchain-gui/packages/gui/daemon

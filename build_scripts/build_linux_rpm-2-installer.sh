@@ -48,7 +48,7 @@ pwd
 bash ./build_license_directory.sh
 
 # Builds CLI only rpm
-CLI_RPM_BASE="chia-blockchain-cli-$CHIA_INSTALLER_VERSION-1.$REDHAT_PLATFORM"
+CLI_RPM_BASE="cryptomines-blockchain-cli-$CHIA_INSTALLER_VERSION-1.$REDHAT_PLATFORM"
 mkdir -p "dist/$CLI_RPM_BASE/opt/chia"
 mkdir -p "dist/$CLI_RPM_BASE/usr/bin"
 cp -r dist/daemon/* "dist/$CLI_RPM_BASE/opt/chia/"
@@ -64,7 +64,7 @@ rvm use ruby-3
 fpm -s dir -t rpm \
   -C "dist/$CLI_RPM_BASE" \
   -p "dist/$CLI_RPM_BASE.rpm" \
-  --name chia-blockchain-cli \
+  --name cryptomines-blockchain-cli \
   --license Apache-2.0 \
   --version "$CHIA_INSTALLER_VERSION" \
   --architecture "$REDHAT_PLATFORM" \
@@ -72,11 +72,11 @@ fpm -s dir -t rpm \
   --depends /usr/lib64/libcrypt.so.1 \
   .
 # CLI only rpm done
-cp -r dist/daemon ../chia-blockchain-gui/packages/gui
+cp -r dist/daemon ../cryptomines-blockchain-gui/packages/gui
 # Change to the gui package
-cd ../chia-blockchain-gui/packages/gui || exit 1
+cd ../cryptomines-blockchain-gui/packages/gui || exit 1
 
-# sets the version for chia-blockchain in package.json
+# sets the version for cryptomines-blockchain in package.json
 cp package.json package.json.orig
 jq --arg VER "$CHIA_INSTALLER_VERSION" '.version=$VER' package.json > temp.json && mv temp.json package.json
 
@@ -87,13 +87,13 @@ if [ "$REDHAT_PLATFORM" = "arm64" ]; then
 fi
 PRODUCT_NAME="chia"
 echo electron-builder build --linux rpm "${OPT_ARCH}" \
-  --config.extraMetadata.name=chia-blockchain \
+  --config.extraMetadata.name=cryptomines-blockchain \
   --config.productName="${PRODUCT_NAME}" --config.linux.desktop.Name="Chia Blockchain" \
-  --config.rpm.packageName="chia-blockchain"
+  --config.rpm.packageName="cryptomines-blockchain"
 electron-builder build --linux rpm "${OPT_ARCH}" \
-  --config.extraMetadata.name=chia-blockchain \
+  --config.extraMetadata.name=cryptomines-blockchain \
   --config.productName="${PRODUCT_NAME}" --config.linux.desktop.Name="Chia Blockchain" \
-  --config.rpm.packageName="chia-blockchain"
+  --config.rpm.packageName="cryptomines-blockchain"
 LAST_EXIT_CODE=$?
 ls -l dist/linux*-unpacked/resources
 
@@ -105,7 +105,7 @@ if [ "$LAST_EXIT_CODE" -ne 0 ]; then
 	exit $LAST_EXIT_CODE
 fi
 
-GUI_RPM_NAME="chia-blockchain-${CHIA_INSTALLER_VERSION}-1.${REDHAT_PLATFORM}.rpm"
+GUI_RPM_NAME="cryptomines-blockchain-${CHIA_INSTALLER_VERSION}-1.${REDHAT_PLATFORM}.rpm"
 mv "dist/${PRODUCT_NAME}-${CHIA_INSTALLER_VERSION}.rpm" "../../../build_scripts/dist/${GUI_RPM_NAME}"
 cd ../../../build_scripts || exit 1
 

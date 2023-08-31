@@ -53,7 +53,7 @@ bash ./build_license_directory.sh
 # Builds CLI only .deb
 # need j2 for templating the control file
 pip install j2cli
-CLI_DEB_BASE="chia-blockchain-cli_$CHIA_INSTALLER_VERSION-1_$PLATFORM"
+CLI_DEB_BASE="cryptomines-blockchain-cli_$CHIA_INSTALLER_VERSION-1_$PLATFORM"
 mkdir -p "dist/$CLI_DEB_BASE/opt/chia"
 mkdir -p "dist/$CLI_DEB_BASE/usr/bin"
 mkdir -p "dist/$CLI_DEB_BASE/DEBIAN"
@@ -64,12 +64,12 @@ ln -s ../../opt/chia/chia "dist/$CLI_DEB_BASE/usr/bin/chia"
 dpkg-deb --build --root-owner-group "dist/$CLI_DEB_BASE"
 # CLI only .deb done
 
-cp -r dist/daemon ../chia-blockchain-gui/packages/gui
+cp -r dist/daemon ../cryptomines-blockchain-gui/packages/gui
 
 # Change to the gui package
-cd ../chia-blockchain-gui/packages/gui || exit 1
+cd ../cryptomines-blockchain-gui/packages/gui || exit 1
 
-# sets the version for chia-blockchain in package.json
+# sets the version for cryptomines-blockchain in package.json
 cp package.json package.json.orig
 jq --arg VER "$CHIA_INSTALLER_VERSION" '.version=$VER' package.json > temp.json && mv temp.json package.json
 
@@ -90,23 +90,23 @@ if [ "$PLATFORM" = "arm64" ]; then
   sudo gem install public_suffix -v 4.0.7
   sudo gem install fpm
   echo USE_SYSTEM_FPM=true electron-builder build --linux deb --arm64 \
-    --config.extraMetadata.name=chia-blockchain \
+    --config.extraMetadata.name=cryptomines-blockchain \
     --config.productName="$PRODUCT_NAME" --config.linux.desktop.Name="Chia Blockchain" \
-    --config.deb.packageName="chia-blockchain"
+    --config.deb.packageName="cryptomines-blockchain"
   USE_SYSTEM_FPM=true electron-builder build --linux deb --arm64 \
-    --config.extraMetadata.name=chia-blockchain \
+    --config.extraMetadata.name=cryptomines-blockchain \
     --config.productName="$PRODUCT_NAME" --config.linux.desktop.Name="Chia Blockchain" \
-    --config.deb.packageName="chia-blockchain"
+    --config.deb.packageName="cryptomines-blockchain"
   LAST_EXIT_CODE=$?
 else
   echo electron-builder build --linux deb --x64 \
-    --config.extraMetadata.name=chia-blockchain \
+    --config.extraMetadata.name=cryptomines-blockchain \
     --config.productName="$PRODUCT_NAME" --config.linux.desktop.Name="Chia Blockchain" \
-    --config.deb.packageName="chia-blockchain"
+    --config.deb.packageName="cryptomines-blockchain"
   electron-builder build --linux deb --x64 \
-    --config.extraMetadata.name=chia-blockchain \
+    --config.extraMetadata.name=cryptomines-blockchain \
     --config.productName="$PRODUCT_NAME" --config.linux.desktop.Name="Chia Blockchain" \
-    --config.deb.packageName="chia-blockchain"
+    --config.deb.packageName="cryptomines-blockchain"
   LAST_EXIT_CODE=$?
 fi
 ls -l dist/linux*-unpacked/resources
@@ -119,7 +119,7 @@ if [ "$LAST_EXIT_CODE" -ne 0 ]; then
 	exit $LAST_EXIT_CODE
 fi
 
-GUI_DEB_NAME=chia-blockchain_${CHIA_INSTALLER_VERSION}_${PLATFORM}.deb
+GUI_DEB_NAME=cryptomines-blockchain_${CHIA_INSTALLER_VERSION}_${PLATFORM}.deb
 mv "dist/${PRODUCT_NAME}-${CHIA_INSTALLER_VERSION}.deb" "../../../build_scripts/dist/${GUI_DEB_NAME}"
 cd ../../../build_scripts || exit 1
 

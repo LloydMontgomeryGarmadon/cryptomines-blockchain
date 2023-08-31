@@ -75,7 +75,7 @@ legacy_keyring_dependencies = [
 ]
 
 kwargs = dict(
-    name="chia-blockchain",
+    name="cryptomines-blockchain",
     author="Mariano Sorgente",
     author_email="mariano@chia.net",
     description="Chia blockchain full node, farmer, timelord, and wallet.",
@@ -120,8 +120,8 @@ kwargs = dict(
     long_description_content_type="text/markdown",
     zip_safe=False,
     project_urls={
-        "Source": "https://github.com/Chia-Network/chia-blockchain/",
-        "Changelog": "https://github.com/Chia-Network/chia-blockchain/blob/main/CHANGELOG.md",
+        "Source": "https://github.com/Chia-Network/cryptomines-blockchain/",
+        "Changelog": "https://github.com/Chia-Network/cryptomines-blockchain/blob/main/CHANGELOG.md",
     },
 )
 

@@ -4,4 +4,4 @@
 set -e
 
 unlink /usr/bin/chia || true
-unlink /usr/bin/chia-blockchain || true
+unlink /usr/bin/cryptomines-blockchain || true

@@ -39,11 +39,11 @@ echo "Building pip and NPM license directory"
 pwd
 bash ./build_license_directory.sh
 
-cp -r dist/daemon ../chia-blockchain-gui/packages/gui
+cp -r dist/daemon ../cryptomines-blockchain-gui/packages/gui
 # Change to the gui package
-cd ../chia-blockchain-gui/packages/gui || exit 1
+cd ../cryptomines-blockchain-gui/packages/gui || exit 1
 
-# sets the version for chia-blockchain in package.json
+# sets the version for cryptomines-blockchain in package.json
 brew install jq
 cp package.json package.json.orig
 jq --arg VER "$CHIA_INSTALLER_VERSION" '.version=$VER' package.json > temp.json && mv temp.json package.json

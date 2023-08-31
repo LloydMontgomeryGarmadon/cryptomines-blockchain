@@ -26,9 +26,9 @@ Write-Output "   ---"
 bash ./build_win_license_dir.sh
 
 Write-Output "   ---"
-Write-Output "Copy chia executables to chia-blockchain-gui\"
+Write-Output "Copy chia executables to cryptomines-blockchain-gui\"
 Write-Output "   ---"
-Copy-Item "dist\daemon" -Destination "..\chia-blockchain-gui\packages\gui\" -Recurse
+Copy-Item "dist\daemon" -Destination "..\cryptomines-blockchain-gui\packages\gui\" -Recurse
 
 Write-Output "   ---"
 Write-Output "Setup npm packager"
@@ -45,7 +45,7 @@ Write-Output "   ---"
 $Env:NODE_OPTIONS = "--max-old-space-size=3000"
 
 # Change to the GUI directory
-Set-Location -Path "chia-blockchain-gui\packages\gui" -PassThru
+Set-Location -Path "cryptomines-blockchain-gui\packages\gui" -PassThru
 
 Write-Output "   ---"
 Write-Output "Increase the stack for chia command for (chia plots create) chiapos limitations"
@@ -107,9 +107,9 @@ If ($env:HAS_SIGNING_SECRET) {
 Write-Output "   ---"
 Write-Output "Moving final installers to expected location"
 Write-Output "   ---"
-Copy-Item ".\dist\win-unpacked" -Destination "$env:GITHUB_WORKSPACE\chia-blockchain-gui\Chia-win32-x64" -Recurse
-mkdir "$env:GITHUB_WORKSPACE\chia-blockchain-gui\release-builds\windows-installer" -ea 0
-Copy-Item ".\dist\ChiaSetup-$packageVersion.exe" -Destination "$env:GITHUB_WORKSPACE\chia-blockchain-gui\release-builds\windows-installer"
+Copy-Item ".\dist\win-unpacked" -Destination "$env:GITHUB_WORKSPACE\cryptomines-blockchain-gui\Chia-win32-x64" -Recurse
+mkdir "$env:GITHUB_WORKSPACE\cryptomines-blockchain-gui\release-builds\windows-installer" -ea 0
+Copy-Item ".\dist\ChiaSetup-$packageVersion.exe" -Destination "$env:GITHUB_WORKSPACE\cryptomines-blockchain-gui\release-builds\windows-installer"
 
 Write-Output "   ---"
 Write-Output "Windows Installer complete"

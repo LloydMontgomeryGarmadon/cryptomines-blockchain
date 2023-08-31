@@ -1507,7 +1507,7 @@ async def async_run_daemon(root_path: Path, wait_for_unlock: bool = False) -> in
     sys.stdout.flush()
     try:
         with Lockfile.create(daemon_launch_lock_path(root_path), timeout=1):
-            log.info(f"chia-blockchain version: {chia_full_version_str()}")
+            log.info(f"cryptomines-blockchain version: {chia_full_version_str()}")
 
             beta_metrics: Optional[BetaMetricsLogger] = None
             if config.get("beta", {}).get("enabled", False):
