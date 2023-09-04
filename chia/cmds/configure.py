@@ -144,7 +144,7 @@ def configure(
 
             elif testnet == "false" or testnet == "f":
                 print("Setting Mainnet")
-                mainnet_port = "8444"
+                mainnet_port = "44411"
                 mainnet_introducer = "introducer.cryptominesblockchain.pl"
                 mainnet_dns_introducer = "dns-introducer.cryptominesblockchain.pl"
                 bootstrap_peers = ["node.cryptominesblockchain.pl"]
