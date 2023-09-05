@@ -2906,10 +2906,10 @@ class WalletRpcApi:
                 target_list.append(decode_puzzle_hash(target))
         mint_number_start = request.get("mint_number_start", 1)
         mint_total = request.get("mint_total", None)
-        xch_coin_list = request.get("xch_coins", None)
-        xch_coins = None
+        xch_coin_list = request.get("kop_coins", None)
+        kop_coins = None
         if xch_coin_list:
-            xch_coins = set([Coin.from_json_dict(xch_coin) for xch_coin in xch_coin_list])
+            kop_coins = set([Coin.from_json_dict(xch_coin) for xch_coin in xch_coin_list])
         xch_change_target = request.get("xch_change_target", None)
         if xch_change_target is not None:
             if xch_change_target[:2] == "xch":
@@ -2939,7 +2939,7 @@ class WalletRpcApi:
                 mint_number_start=mint_number_start,
                 mint_total=mint_total,
                 target_list=target_list,
-                xch_coins=xch_coins,
+                kop_coins=kop_coins,
                 xch_change_ph=xch_change_ph,
                 new_innerpuzhash=new_innerpuzhash,
                 new_p2_puzhash=new_p2_puzhash,
@@ -2954,7 +2954,7 @@ class WalletRpcApi:
                 mint_number_start=mint_number_start,
                 mint_total=mint_total,
                 target_list=target_list,
-                xch_coins=xch_coins,
+                kop_coins=kop_coins,
                 xch_change_ph=xch_change_ph,
                 fee=fee,
                 tx_config=tx_config,

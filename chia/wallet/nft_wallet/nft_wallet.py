@@ -1236,7 +1236,7 @@ class NFTWallet:
         target_list: Optional[List[bytes32]] = [],
         mint_number_start: Optional[int] = 1,
         mint_total: Optional[int] = None,
-        xch_coins: Optional[Set[Coin]] = None,
+        kop_coins: Optional[Set[Coin]] = None,
         xch_change_ph: Optional[bytes32] = None,
         new_innerpuzhash: Optional[bytes32] = None,
         new_p2_puzhash: Optional[bytes32] = None,
@@ -1260,7 +1260,7 @@ class NFTWallet:
         :param mint_number_start: [Optional] The starting point for mint number used in intermediate launcher
         puzzle. Default: 1
         :param mint_total: [Optional] The total number of NFTs being minted
-        :param xch_coins: [Optional] For use with bulk minting to provide the coin used for funding the minting spend.
+        :param kop_coins: [Optional] For use with bulk minting to provide the coin used for funding the minting spend.
         This coin can be one that will be created in the future
         :param xch_change_ph: [Optional] For use with bulk minting, so we can specify the puzzle hash that the change
         from the funding transaction goes to.
@@ -1309,9 +1309,9 @@ class NFTWallet:
         # Ensure we have an xch coin of high enough amount
         assert isinstance(fee, uint64)
         total_amount = len(metadata_list) + fee
-        if xch_coins is None:
-            xch_coins = await self.standard_wallet.select_coins(uint64(total_amount), tx_config.coin_selection_config)
-        assert len(xch_coins) > 0
+        if kop_coins is None:
+            kop_coins = await self.standard_wallet.select_coins(uint64(total_amount), tx_config.coin_selection_config)
+        assert len(kop_coins) > 0
 
         # set the chunk size for the spend bundle we're going to create
         chunk_size = len(metadata_list)
@@ -1432,7 +1432,7 @@ class NFTWallet:
 
         # We've now created all the intermediate, launcher, eve and transfer spends.
         # Create the xch spend to fund the minting.
-        spend_value = sum([coin.amount for coin in xch_coins])
+        spend_value = sum([coin.amount for coin in kop_coins])
         change: uint64 = uint64(spend_value - total_amount)
         xch_spends = []
         if xch_change_ph is None:
@@ -1440,14 +1440,14 @@ class NFTWallet:
         xch_payment = Payment(xch_change_ph, change, [xch_change_ph])
 
         first = True
-        for xch_coin in xch_coins:
+        for xch_coin in kop_coins:
             puzzle: Program = await self.standard_wallet.puzzle_for_puzzle_hash(xch_coin.puzzle_hash)
             if first:
-                message_list: List[bytes32] = [c.name() for c in xch_coins]
+                message_list: List[bytes32] = [c.name() for c in kop_coins]
                 message_list.append(Coin(xch_coin.name(), xch_payment.puzzle_hash, xch_payment.amount).name())
                 message: bytes32 = std_hash(b"".join(message_list))
 
-                if len(xch_coins) > 1:
+                if len(kop_coins) > 1:
                     xch_announcement: Optional[Set[bytes]] = {message}
                 else:
                     xch_announcement = None
@@ -1521,7 +1521,7 @@ class NFTWallet:
         target_list: Optional[List[bytes32]] = [],
         mint_number_start: Optional[int] = 1,
         mint_total: Optional[int] = None,
-        xch_coins: Optional[Set[Coin]] = None,
+        kop_coins: Optional[Set[Coin]] = None,
         xch_change_ph: Optional[bytes32] = None,
         fee: Optional[uint64] = uint64(0),
     ) -> SpendBundle:
@@ -1532,7 +1532,7 @@ class NFTWallet:
         :param mint_number_start: [Optional] The starting point for mint number used in intermediate launcher
         puzzle. Default: 1
         :param mint_total: [Optional] The total number of NFTs being minted
-        :param xch_coins: [Optional] For use with bulk minting to provide the coin used for funding the minting spend.
+        :param kop_coins: [Optional] For use with bulk minting to provide the coin used for funding the minting spend.
         This coin can be one that will be created in the future
         :param xch_change_ph: [Optional] For use with bulk minting, so we can specify the puzzle hash that the change
         from the funding transaction goes to.
@@ -1548,11 +1548,11 @@ class NFTWallet:
         # Ensure we have an xch coin of high enough amount
         assert isinstance(fee, uint64)
         total_amount = len(metadata_list) + fee
-        if xch_coins is None:
-            xch_coins = await self.standard_wallet.select_coins(uint64(total_amount), tx_config.coin_selection_config)
-        assert len(xch_coins) > 0
+        if kop_coins is None:
+            kop_coins = await self.standard_wallet.select_coins(uint64(total_amount), tx_config.coin_selection_config)
+        assert len(kop_coins) > 0
 
-        funding_coin = xch_coins.copy().pop()
+        funding_coin = kop_coins.copy().pop()
 
         # set the chunk size for the spend bundle we're going to create
         chunk_size = len(metadata_list)
@@ -1669,7 +1669,7 @@ class NFTWallet:
 
         # We've now created all the intermediate, launcher, eve and transfer spends.
         # Create the xch spend to fund the minting.
-        spend_value = sum([coin.amount for coin in xch_coins])
+        spend_value = sum([coin.amount for coin in kop_coins])
         change: uint64 = uint64(spend_value - total_amount)
         xch_spends = []
         if xch_change_ph is None:
@@ -1677,14 +1677,14 @@ class NFTWallet:
         xch_payment = Payment(xch_change_ph, change, [xch_change_ph])
 
         first = True
-        for xch_coin in xch_coins:
+        for xch_coin in kop_coins:
             puzzle: Program = await self.standard_wallet.puzzle_for_puzzle_hash(xch_coin.puzzle_hash)
             if first:
-                message_list: List[bytes32] = [c.name() for c in xch_coins]
+                message_list: List[bytes32] = [c.name() for c in kop_coins]
                 message_list.append(Coin(xch_coin.name(), xch_payment.puzzle_hash, xch_payment.amount).name())
                 message: bytes32 = std_hash(b"".join(message_list))
 
-                if len(xch_coins) > 1:
+                if len(kop_coins) > 1:
                     xch_announcement: Optional[Set[bytes]] = {message}
                 else:
                     xch_announcement = None
@@ -1692,7 +1692,7 @@ class NFTWallet:
                 solution: Program = self.standard_wallet.make_solution(
                     primaries=[xch_payment] + primaries,
                     fee=fee,
-                    coin_announcements=xch_announcement if len(xch_coins) > 1 else None,
+                    coin_announcements=xch_announcement if len(kop_coins) > 1 else None,
                     coin_announcements_to_assert=coin_announcements,
                     puzzle_announcements_to_assert=puzzle_assertions,
                 )
