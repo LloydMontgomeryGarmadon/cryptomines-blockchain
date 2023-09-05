@@ -601,9 +601,9 @@ wallet:
   reset_sync_for_fingerprint: null
 
   # After n received unspent transactions, the spam filter will be enabled, which will filter out received
-  # coins with very small value. Any standard TX under xch_spam_amount is filtered
+  # coins with very small value. Any standard TX under kop_spam_amount is filtered
   spam_filter_after_n_txs: 200
-  xch_spam_amount: 1000000
+  kop_spam_amount: 1000000
   # Enable notifications from parties on chain
   enable_notifications: True
   # The amount someone has to pay you in mojos for you to see their notification

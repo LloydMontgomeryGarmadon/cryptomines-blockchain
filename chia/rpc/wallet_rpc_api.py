@@ -2910,12 +2910,12 @@ class WalletRpcApi:
         kop_coins = None
         if xch_coin_list:
             kop_coins = set([Coin.from_json_dict(xch_coin) for xch_coin in xch_coin_list])
-        xch_change_target = request.get("xch_change_target", None)
-        if xch_change_target is not None:
-            if xch_change_target[:2] == "xch":
-                xch_change_ph = decode_puzzle_hash(xch_change_target)
+        kop_change_target = request.get("kop_change_target", None)
+        if kop_change_target is not None:
+            if kop_change_target[:2] == "xch":
+                xch_change_ph = decode_puzzle_hash(kop_change_target)
             else:
-                xch_change_ph = bytes32(hexstr_to_bytes(xch_change_target))
+                xch_change_ph = bytes32(hexstr_to_bytes(kop_change_target))
         else:
             xch_change_ph = None
         new_innerpuzhash = request.get("new_innerpuzhash", None)

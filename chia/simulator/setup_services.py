@@ -257,7 +257,7 @@ async def setup_wallet_node(
     consensus_constants: ConsensusConstants,
     local_bt: BlockTools,
     spam_filter_after_n_txs: Optional[int] = 200,
-    xch_spam_amount: int = 1000000,
+    kop_spam_amount: int = 1000000,
     full_node_port: Optional[uint16] = None,
     introducer_port: Optional[uint16] = None,
     key_seed: Optional[bytes] = None,
@@ -271,7 +271,7 @@ async def setup_wallet_node(
         service_config["rpc_port"] = 0
         service_config["initial_num_public_keys"] = initial_num_public_keys
         service_config["spam_filter_after_n_txs"] = spam_filter_after_n_txs
-        service_config["xch_spam_amount"] = xch_spam_amount
+        service_config["kop_spam_amount"] = kop_spam_amount
 
         entropy = token_bytes(32)
         if key_seed is None:
