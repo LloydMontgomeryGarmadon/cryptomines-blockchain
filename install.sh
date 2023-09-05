@@ -62,9 +62,9 @@ fi
 if [ "$(uname -m)" = "armv7l" ]; then
   echo ""
   echo "WARNING:"
-  echo "The Chia Blockchain requires a 64 bit OS and this is 32 bit armv7l"
+  echo "The Cryptomines Blockchain requires a 64 bit OS and this is 32 bit armv7l"
   echo "For more information, see"
-  echo "https://github.com/Chia-Network/cryptomines-blockchain/wiki/Raspberry-Pi"
+  echo "https://github.com/Cryptomines-Network/cryptomines-blockchain/wiki/Raspberry-Pi"
   echo "Exiting."
   exit 1
 fi
@@ -276,7 +276,7 @@ if ! command -v "$INSTALL_PYTHON_PATH" >/dev/null; then
 fi
 
 if [ "$PYTHON_MAJOR_VER" -ne "3" ] || [ "$PYTHON_MINOR_VER" -lt "7" ] || [ "$PYTHON_MINOR_VER" -ge "12" ]; then
-  echo "Chia requires Python version >= 3.7 and  < 3.12.0" >&2
+  echo "Cryptomines requires Python version >= 3.7 and  < 3.12.0" >&2
   echo "Current Python version = $INSTALL_PYTHON_VERSION" >&2
   # If Arch, direct to Arch Wiki
   if type pacman >/dev/null 2>&1 && [ -f "/etc/arch-release" ]; then
@@ -350,12 +350,12 @@ if [ -n "$PLOTTER_INSTALL" ]; then
 fi
 
 echo ""
-echo "Chia blockchain install.sh complete."
+echo "Cryptomines blockchain install.sh complete."
 echo "For assistance join us on Discord in the #support chat channel:"
 echo "https://discord.gg/chia"
 echo ""
 echo "Try the Quick Start Guide to running cryptomines-blockchain:"
-echo "https://github.com/Chia-Network/cryptomines-blockchain/wiki/Quick-Start-Guide"
+echo "https://github.com/Cryptomines-Network/cryptomines-blockchain/wiki/Quick-Start-Guide"
 echo ""
 echo "To install the GUI run '. ./activate' then 'sh install-gui.sh'."
 echo ""

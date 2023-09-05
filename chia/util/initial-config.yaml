@@ -454,7 +454,7 @@ full_node:
     host: *self_hostname
     port: 44413
   introducer_peer:
-    host: introducer.cryptominesblockchain.pl # Chia AWS introducer IPv4/IPv6
+    host: introducer.cryptominesblockchain.pl # Cryptomines AWS introducer IPv4/IPv6
     port: 44412
     enable_private_networks: False
   wallet_peer:
@@ -567,7 +567,7 @@ wallet:
   recent_peer_threshold: 6000
 
   introducer_peer:
-    host: introducer.cryptominesblockchain.pl # Chia AWS introducer IPv4/IPv6
+    host: introducer.cryptominesblockchain.pl # Cryptomines AWS introducer IPv4/IPv6
     port: 44412
     enable_private_networks: False
 

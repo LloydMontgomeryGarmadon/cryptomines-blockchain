@@ -1385,7 +1385,7 @@ class WalletRpcApi:
 
         if signing_mode == SigningMode.CHIP_0002:
             # CHIP-0002 message signatures are made over the tree hash of:
-            #   ("Chia Signed Message", message)
+            #   ("Cryptomines Signed Message", message)
             message_to_verify: bytes = Program.to((CHIP_0002_SIGN_MESSAGE_PREFIX, input_message)).get_tree_hash()
         elif signing_mode == SigningMode.BLS_MESSAGE_AUGMENTATION_HEX_INPUT:
             # Message is expected to be a hex string

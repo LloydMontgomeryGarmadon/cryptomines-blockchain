@@ -41,8 +41,8 @@ def init_cmd(
     - Shut down all chia daemon processes with `chia stop all -d`
     - Run `chia init -c [directory]` on your remote harvester,
       where [directory] is the the copy of your Farming Machine CA directory
-    - Get more details on remote harvester on Chia wiki:
-      https://github.com/Chia-Network/cryptomines-blockchain/wiki/Farming-on-many-machines
+    - Get more details on remote harvester on Cryptomines wiki:
+      https://github.com/Cryptomines-Network/cryptomines-blockchain/wiki/Farming-on-many-machines
     """
     from pathlib import Path
 

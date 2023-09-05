@@ -22,7 +22,7 @@ if [ ! "$CRYPTOMINES_INSTALLER_VERSION" ]; then
 	echo "WARNING: No environment variable CRYPTOMINES_INSTALLER_VERSION set. Using 0.0.0."
 	CRYPTOMINES_INSTALLER_VERSION="0.0.0"
 fi
-echo "Chia Installer Version is: $CRYPTOMINES_INSTALLER_VERSION"
+echo "Cryptomines Installer Version is: $CRYPTOMINES_INSTALLER_VERSION"
 export CRYPTOMINES_INSTALLER_VERSION
 
 echo "Installing npm and electron packagers"
@@ -91,21 +91,21 @@ if [ "$PLATFORM" = "arm64" ]; then
   sudo gem install fpm
   echo USE_SYSTEM_FPM=true electron-builder build --linux deb --arm64 \
     --config.extraMetadata.name=cryptomines-blockchain \
-    --config.productName="$PRODUCT_NAME" --config.linux.desktop.Name="Chia Blockchain" \
+    --config.productName="$PRODUCT_NAME" --config.linux.desktop.Name="Cryptomines Blockchain" \
     --config.deb.packageName="cryptomines-blockchain"
   USE_SYSTEM_FPM=true electron-builder build --linux deb --arm64 \
     --config.extraMetadata.name=cryptomines-blockchain \
-    --config.productName="$PRODUCT_NAME" --config.linux.desktop.Name="Chia Blockchain" \
+    --config.productName="$PRODUCT_NAME" --config.linux.desktop.Name="Cryptomines Blockchain" \
     --config.deb.packageName="cryptomines-blockchain"
   LAST_EXIT_CODE=$?
 else
   echo electron-builder build --linux deb --x64 \
     --config.extraMetadata.name=cryptomines-blockchain \
-    --config.productName="$PRODUCT_NAME" --config.linux.desktop.Name="Chia Blockchain" \
+    --config.productName="$PRODUCT_NAME" --config.linux.desktop.Name="Cryptomines Blockchain" \
     --config.deb.packageName="cryptomines-blockchain"
   electron-builder build --linux deb --x64 \
     --config.extraMetadata.name=cryptomines-blockchain \
-    --config.productName="$PRODUCT_NAME" --config.linux.desktop.Name="Chia Blockchain" \
+    --config.productName="$PRODUCT_NAME" --config.linux.desktop.Name="Cryptomines Blockchain" \
     --config.deb.packageName="cryptomines-blockchain"
   LAST_EXIT_CODE=$?
 fi

@@ -331,7 +331,7 @@ def chia_init(
     if chia_root is not None:
         print(f"CRYPTOMINES_ROOT is set to {chia_root}")
 
-    print(f"Chia directory {root_path}")
+    print(f"Cryptomines directory {root_path}")
     if root_path.is_dir() and Path(root_path / "config" / "config.yaml").exists():
         # This is reached if CRYPTOMINES_ROOT is set, or if user has run chia init twice
         # before a new update.

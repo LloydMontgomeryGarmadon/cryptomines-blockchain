@@ -12,7 +12,7 @@ if [ ! "$CRYPTOMINES_INSTALLER_VERSION" ]; then
 	echo "WARNING: No environment variable CRYPTOMINES_INSTALLER_VERSION set. Using 0.0.0."
 	CRYPTOMINES_INSTALLER_VERSION="0.0.0"
 fi
-echo "Chia Installer Version is: $CRYPTOMINES_INSTALLER_VERSION"
+echo "Cryptomines Installer Version is: $CRYPTOMINES_INSTALLER_VERSION"
 
 echo "Installing npm utilities"
 cd npm_macos || exit 1
@@ -53,7 +53,7 @@ OPT_ARCH="--x64"
 if [ "$(arch)" = "arm64" ]; then
   OPT_ARCH="--arm64"
 fi
-PRODUCT_NAME="Chia"
+PRODUCT_NAME="Cryptomines"
 if [ "$NOTARIZE" == true ]; then
 	echo "Setting credentials for signing"
 	export CSC_LINK=$APPLE_DEV_ID_APP
@@ -104,7 +104,7 @@ fi
 #
 # Ask for username and password. password should be an app specific password.
 # Generate app specific password https://support.apple.com/en-us/HT204397
-# xcrun altool --notarize-app -f Chia-0.1.X.dmg --primary-bundle-id net.chia.blockchain -u username -p password
+# xcrun altool --notarize-app -f Cryptomines-0.1.X.dmg --primary-bundle-id net.chia.blockchain -u username -p password
 # xcrun altool --notarize-app; -should return REQUEST-ID, use it in next command
 #
 # Wait until following command return a success message".
@@ -112,7 +112,7 @@ fi
 # It can take a while, run it every few minutes.
 #
 # Once that is successful, execute the following command":
-# xcrun stapler staple Chia-0.1.X.dmg
+# xcrun stapler staple Cryptomines-0.1.X.dmg
 #
 # Validate DMG:
-# xcrun stapler validate Chia-0.1.X.dmg
+# xcrun stapler validate Cryptomines-0.1.X.dmg

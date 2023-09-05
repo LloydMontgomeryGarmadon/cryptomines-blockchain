@@ -21,7 +21,7 @@ if [ ! "$CRYPTOMINES_INSTALLER_VERSION" ]; then
 	echo "WARNING: No environment variable CRYPTOMINES_INSTALLER_VERSION set. Using 0.0.0."
 	CRYPTOMINES_INSTALLER_VERSION="0.0.0"
 fi
-echo "Chia Installer Version is: $CRYPTOMINES_INSTALLER_VERSION"
+echo "Cryptomines Installer Version is: $CRYPTOMINES_INSTALLER_VERSION"
 
 echo "Installing npm and electron packagers"
 cd npm_linux || exit 1
@@ -68,7 +68,7 @@ fpm -s dir -t rpm \
   --license Apache-2.0 \
   --version "$CRYPTOMINES_INSTALLER_VERSION" \
   --architecture "$REDHAT_PLATFORM" \
-  --description "Chia is a modern cryptocurrency built from scratch, designed to be efficient, decentralized, and secure." \
+  --description "Cryptomines is a modern cryptocurrency built from scratch, designed to be efficient, decentralized, and secure." \
   --depends /usr/lib64/libcrypt.so.1 \
   .
 # CLI only rpm done
@@ -88,11 +88,11 @@ fi
 PRODUCT_NAME="chia"
 echo electron-builder build --linux rpm "${OPT_ARCH}" \
   --config.extraMetadata.name=cryptomines-blockchain \
-  --config.productName="${PRODUCT_NAME}" --config.linux.desktop.Name="Chia Blockchain" \
+  --config.productName="${PRODUCT_NAME}" --config.linux.desktop.Name="Cryptomines Blockchain" \
   --config.rpm.packageName="cryptomines-blockchain"
 electron-builder build --linux rpm "${OPT_ARCH}" \
   --config.extraMetadata.name=cryptomines-blockchain \
-  --config.productName="${PRODUCT_NAME}" --config.linux.desktop.Name="Chia Blockchain" \
+  --config.productName="${PRODUCT_NAME}" --config.linux.desktop.Name="Cryptomines Blockchain" \
   --config.rpm.packageName="cryptomines-blockchain"
 LAST_EXIT_CODE=$?
 ls -l dist/linux*-unpacked/resources

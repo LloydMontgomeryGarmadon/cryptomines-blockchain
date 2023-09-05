@@ -44,7 +44,7 @@ def generate_cmd(ctx: click.Context, label: Optional[str]) -> None:
     "--non-observer-derivation",
     "-d",
     help=(
-        "Show the first wallet address using non-observer derivation. Older Chia versions use "
+        "Show the first wallet address using non-observer derivation. Older Cryptomines versions use "
         "non-observer derivation when generating wallet addresses."
     ),
     default=False,
