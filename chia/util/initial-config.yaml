@@ -88,21 +88,21 @@ network_overrides: &network_overrides
       address_prefix: "xch"
       default_full_node_port: 44411
     testnet0:
-      address_prefix: "txch"
+      address_prefix: "tkop"
       default_full_node_port: 44411
     testnet1:
-      address_prefix: "txch"
+      address_prefix: "tkop"
     testnet2:
-      address_prefix: "txch"
+      address_prefix: "tkop"
     testnet3:
-      address_prefix: "txch"
+      address_prefix: "tkop"
     testnet4:
-      address_prefix: "txch"
+      address_prefix: "tkop"
     testnet7:
-      address_prefix: "txch"
+      address_prefix: "tkop"
       default_full_node_port: 44411
     testnet10:
-      address_prefix: "txch"
+      address_prefix: "tkop"
       default_full_node_port: 44411
 
 selected_network: &selected_network "mainnet"

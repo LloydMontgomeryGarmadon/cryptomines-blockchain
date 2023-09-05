@@ -955,7 +955,7 @@ There is a known issue where harvesters will not reconnect to the farmer automat
 
 ### Added
 
-- Added checks to ensure wallet address prefixes are either `xch` or `txch`.
+- Added checks to ensure wallet address prefixes are either `xch` or `tkop`.
 - Added a better TLS1.3 check to handle cases where python is using a non-openssl TLS library.
 
 ### Changed
