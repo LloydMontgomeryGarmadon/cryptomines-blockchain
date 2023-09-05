@@ -366,7 +366,7 @@ for setuptools_scm/PEP 440 reasons.
 - Add support for pending transactions to `get_mempool_item_by_tx_id()` (thanks @rwarren)
 - Simplify the mempool manager instantiation
 - Add coin id and address to NFT Details screen in GUI
-- New GUI prefs location under `CHIA_ROOT`
+- New GUI prefs location under `CRYPTOMINES_ROOT`
 - Removed SkyNFT references
 - Add GUI memo field when sending KOP
 - Update to Electron 20.3.5
@@ -783,7 +783,7 @@ for setuptools_scm/PEP 440 reasons.
 - Simplify install.sh ubuntu version tracking
 - Optimize BLS verification when public key is repeated
 - Use Install.ps1 in build_windows.ps1
-- Updated warning about `CHIA_ROOT` being set when running init
+- Updated warning about `CRYPTOMINES_ROOT` being set when running init
 - Cmds: Adjust stop daemon output
 - Remove unused functions on MerkleSet
 - Optimize `hash_coin_list()`
@@ -1698,7 +1698,7 @@ Batch process weight proof epochs in groups of 900 to fit below May 2020 sqlite 
 - Found and fixed another green flag related issue
 - Fixed an issue with weight proofs where all sub-epochs were sampled, and the size of the weight proof kept growing
 - Fixed an issue with install-gui.sh, where npm audit fix was failing. (Thanks @Depado!)
-- Migration with CHIA_ROOT set does not crash chia init
+- Migration with CRYPTOMINES_ROOT set does not crash chia init
 
 ## 1.0rc8 aka Release Candidate 8 - 2021-03-15
 
@@ -2635,7 +2635,7 @@ relic. We will make a patch available for these systems shortly.
 
 ### Deprecated
 
-- We have made significant changes to the full node database to make it more reliable and quicker to restart. This requires re-syncing the current chain. If you use `chia init` then sync on first start will happen automatically. "\$CHIA_ROOT" users will need to delete `$CHIA_ROOT/db/*` before starting Beta 1.5. This also fixes the simulation issue in Beta 1.4 where tips could go "back in time."
+- We have made significant changes to the full node database to make it more reliable and quicker to restart. This requires re-syncing the current chain. If you use `chia init` then sync on first start will happen automatically. "\$CRYPTOMINES_ROOT" users will need to delete `$CRYPTOMINES_ROOT/db/*` before starting Beta 1.5. This also fixes the simulation issue in Beta 1.4 where tips could go "back in time."
 
 ### Known issues
 
@@ -2688,7 +2688,7 @@ relic. We will make a patch available for these systems shortly.
 - Windows, WSL 2, Linux and MacOS installation is significantly streamlined. There is a new Windows installer for the Wallet GUI (huge thanks to @dkackman).
 - All installs can now be from the source repository or just the binary dependencies on WSL 2, most modern Linuxes, and MacOS Catalina. Binary support is for both Python 3.7 and 3.8.
 - There is a new migration tool to move from Beta1 (or 2) to Beta3. It should move everything except your plots.
-- There is a new command `chia init` that will migrate files and generate your initial configuration. If you want to use the Wallet or farm, you will also have to `chia-generate-keys`. You can read step by step instructions for [upgrading from a previous beta release](https://github.com/Chia-Network/cryptomines-blockchain/wiki/Updating-beta-software). If you've set `$CHIA_ROOT` you will have to make sure your existing configuration remains compatible manually.
+- There is a new command `chia init` that will migrate files and generate your initial configuration. If you want to use the Wallet or farm, you will also have to `chia-generate-keys`. You can read step by step instructions for [upgrading from a previous beta release](https://github.com/Chia-Network/cryptomines-blockchain/wiki/Updating-beta-software). If you've set `$CRYPTOMINES_ROOT` you will have to make sure your existing configuration remains compatible manually.
 - Wallet has improved paper wallet recovery support.
 - We now also support restoring old wallets with only the wallet_sk and wallet_target. Beta3's Wallet will re-sync from scratch.
 - We've made lots of little improvements that should speed up node syncing
@@ -2735,7 +2735,7 @@ relic. We will make a patch available for these systems shortly.
 
 - We have revamped the chia management command line. To start a farmer all you have to do is start the venv with `. ./activate` and then type `chia-start-farmer &`. The [README.md](https://github.com/Chia-Network/cryptomines-blockchain/blob/main/README.md) has been updated to reflect the new commands.
 - We have moved all node to node communication to TLS 1.3 by default. For now, all TLS is unauthenticated but certain types of over the wire node to node communications will have the ability to authenticate both by certificate and by inter protocol signature. Encrypting over the wire by default stops casual snooping of transaction origination, light wallet to trusted node communication, and harvester-farmer-node communication for example. This leaves only the mempool and the chain itself open to casual observation by the public and the various entities around the world.
-- Configuration directories have been moved to a default location of HomeDirectory/.chia/release/config, plots/ db/, wallet/ etc. This can be overridden by `export CHIA_ROOT=~/.chia` for example which would then put the plots directory in `HomeDirectory/.chia/plots`.
+- Configuration directories have been moved to a default location of HomeDirectory/.chia/release/config, plots/ db/, wallet/ etc. This can be overridden by `export CRYPTOMINES_ROOT=~/.chia` for example which would then put the plots directory in `HomeDirectory/.chia/plots`.
 - The libraries chia-pos, chia-fast-vdf, and chia-bip-158 have been moved to their own repositories: [chiapos](https://github.com/Chia-Network/chiapos), [chiavdf](https://github.com/Chia-Network/chiavdf), and [chaibip158](https://github.com/Chia-Network/chiabip158). They are brought in by cryptomines-blockchain at install time. Our BLS signature library remains at [bls-signatures](https://github.com/Chia-Network/bls-signatures).
 - The install process now brings in chiapos, chiavdf, etc from Pypi where they are auto published via GitHub Actions ci using cibuildwheel. Check out `.github/workflows/build.yml` for build methods in each of the sub repositories.
 - `chia-regenerate-keys` has been renamed `chia-generate-keys`.

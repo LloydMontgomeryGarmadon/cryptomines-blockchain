@@ -18,12 +18,12 @@ git submodule
 # If the env variable NOTARIZE and the username and password variables are
 # set, this will attempt to Notarize the signed DMG
 
-if [ ! "$CHIA_INSTALLER_VERSION" ]; then
-	echo "WARNING: No environment variable CHIA_INSTALLER_VERSION set. Using 0.0.0."
-	CHIA_INSTALLER_VERSION="0.0.0"
+if [ ! "$CRYPTOMINES_INSTALLER_VERSION" ]; then
+	echo "WARNING: No environment variable CRYPTOMINES_INSTALLER_VERSION set. Using 0.0.0."
+	CRYPTOMINES_INSTALLER_VERSION="0.0.0"
 fi
-echo "Chia Installer Version is: $CHIA_INSTALLER_VERSION"
-export CHIA_INSTALLER_VERSION
+echo "Chia Installer Version is: $CRYPTOMINES_INSTALLER_VERSION"
+export CRYPTOMINES_INSTALLER_VERSION
 
 echo "Installing npm and electron packagers"
 cd npm_linux || exit 1
@@ -53,7 +53,7 @@ bash ./build_license_directory.sh
 # Builds CLI only .deb
 # need j2 for templating the control file
 pip install j2cli
-CLI_DEB_BASE="cryptomines-blockchain-cli_$CHIA_INSTALLER_VERSION-1_$PLATFORM"
+CLI_DEB_BASE="cryptomines-blockchain-cli_$CRYPTOMINES_INSTALLER_VERSION-1_$PLATFORM"
 mkdir -p "dist/$CLI_DEB_BASE/opt/chia"
 mkdir -p "dist/$CLI_DEB_BASE/usr/bin"
 mkdir -p "dist/$CLI_DEB_BASE/DEBIAN"
@@ -71,7 +71,7 @@ cd ../cryptomines-blockchain-gui/packages/gui || exit 1
 
 # sets the version for cryptomines-blockchain in package.json
 cp package.json package.json.orig
-jq --arg VER "$CHIA_INSTALLER_VERSION" '.version=$VER' package.json > temp.json && mv temp.json package.json
+jq --arg VER "$CRYPTOMINES_INSTALLER_VERSION" '.version=$VER' package.json > temp.json && mv temp.json package.json
 
 echo "Building Linux(deb) Electron app"
 PRODUCT_NAME="chia"
@@ -119,8 +119,8 @@ if [ "$LAST_EXIT_CODE" -ne 0 ]; then
 	exit $LAST_EXIT_CODE
 fi
 
-GUI_DEB_NAME=cryptomines-blockchain_${CHIA_INSTALLER_VERSION}_${PLATFORM}.deb
-mv "dist/${PRODUCT_NAME}-${CHIA_INSTALLER_VERSION}.deb" "../../../build_scripts/dist/${GUI_DEB_NAME}"
+GUI_DEB_NAME=cryptomines-blockchain_${CRYPTOMINES_INSTALLER_VERSION}_${PLATFORM}.deb
+mv "dist/${PRODUCT_NAME}-${CRYPTOMINES_INSTALLER_VERSION}.deb" "../../../build_scripts/dist/${GUI_DEB_NAME}"
 cd ../../../build_scripts || exit 1
 
 echo "Create final installer"
