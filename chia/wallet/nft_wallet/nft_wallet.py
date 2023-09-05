@@ -922,7 +922,7 @@ class NFTWallet:
         )
         announcements_to_assert = Offer.calculate_announcements(notarized_payments, driver_dict)
         for asset, payments in royalty_payments.items():
-            if asset is None:  # xch offer
+            if asset is None:  # kop offer
                 offer_puzzle = OFFER_MOD
                 royalty_ph = OFFER_MOD_HASH
             else:
@@ -1034,7 +1034,7 @@ class NFTWallet:
                                 )
                             ).cons(inner_royalty_sol)
 
-                        if asset is None:  # xch offer
+                        if asset is None:  # kop offer
                             offer_puzzle = OFFER_MOD
                             royalty_ph = OFFER_MOD_HASH
                         else:
@@ -1251,7 +1251,7 @@ class NFTWallet:
           mint_number and mint_total for each NFT being minted. These
           intermediate coins then create the launcher coins for the list of NFTs
         - The launcher coins are then spent along with the created eve spend
-          and an xch spend that funds the transactions and pays fees.
+          and an kop spend that funds the transactions and pays fees.
         - There is also an option to pass in a list of target puzzlehashes. If
           provided this method will create an additional transaction transfering
           the minted NFTs to the row-matched target.
@@ -1272,7 +1272,7 @@ class NFTWallet:
         be created in the future
         :param did_lineage_parent: [Optional]  The  parent coin to use for the lineage proof in the DID spend. Needed
         for bulk minting when the coin will be created in the future
-        :param fee: A fee amount, taken out of the xch spend.
+        :param fee: A fee amount, taken out of the kop spend.
         """
         # get DID Wallet
         for wallet in self.wallet_state_manager.wallets.values():
@@ -1306,7 +1306,7 @@ class NFTWallet:
         # make the primaries for the DID spend
         primaries = [Payment(new_innerpuzhash, uint64(did_coin.amount), [bytes(new_p2_puzhash)])]
 
-        # Ensure we have an xch coin of high enough amount
+        # Ensure we have an kop coin of high enough amount
         assert isinstance(fee, uint64)
         total_amount = len(metadata_list) + fee
         if kop_coins is None:
@@ -1431,7 +1431,7 @@ class NFTWallet:
             puzzle_assertions.add(assertion)
 
         # We've now created all the intermediate, launcher, eve and transfer spends.
-        # Create the xch spend to fund the minting.
+        # Create the kop spend to fund the minting.
         spend_value = sum([coin.amount for coin in kop_coins])
         change: uint64 = uint64(spend_value - total_amount)
         xch_spends = []
@@ -1536,7 +1536,7 @@ class NFTWallet:
         This coin can be one that will be created in the future
         :param xch_change_ph: [Optional] For use with bulk minting, so we can specify the puzzle hash that the change
         from the funding transaction goes to.
-        :param fee: A fee amount, taken out of the xch spend.
+        :param fee: A fee amount, taken out of the kop spend.
         """
 
         # Ensure we have an mint_total value
@@ -1545,7 +1545,7 @@ class NFTWallet:
         assert isinstance(mint_number_start, int)
         assert len(metadata_list) <= mint_total + 1 - mint_number_start
 
-        # Ensure we have an xch coin of high enough amount
+        # Ensure we have an kop coin of high enough amount
         assert isinstance(fee, uint64)
         total_amount = len(metadata_list) + fee
         if kop_coins is None:
@@ -1618,7 +1618,7 @@ class NFTWallet:
                 launcher_coin.name(), metadata["program"], NFT_METADATA_UPDATER.get_tree_hash(), inner_puzzle
             )
 
-            # Annnouncements for eve spend. These are asserted by the xch spend
+            # Annnouncements for eve spend. These are asserted by the kop spend
             announcement_message = Program.to([eve_fullpuz.get_tree_hash(), amount, []]).get_tree_hash()
             coin_announcements.add(std_hash(launcher_coin.name() + announcement_message))
 
@@ -1668,7 +1668,7 @@ class NFTWallet:
             puzzle_assertions.add(assertion)
 
         # We've now created all the intermediate, launcher, eve and transfer spends.
-        # Create the xch spend to fund the minting.
+        # Create the kop spend to fund the minting.
         spend_value = sum([coin.amount for coin in kop_coins])
         change: uint64 = uint64(spend_value - total_amount)
         xch_spends = []

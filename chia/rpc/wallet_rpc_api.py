@@ -1851,7 +1851,7 @@ class WalletRpcApi:
         if cancel_all:
             asset_id = None
         else:
-            asset_id = request.get("asset_id", "xch")
+            asset_id = request.get("asset_id", "kop")
 
         start: int = 0
         end: int = start + batch_size
@@ -1859,7 +1859,7 @@ class WalletRpcApi:
         log.info(f"Start cancelling offers for  {'asset_id: ' + asset_id if asset_id is not None else 'all'} ...")
         # Traverse offers page by page
         key = None
-        if asset_id is not None and asset_id != "xch":
+        if asset_id is not None and asset_id != "kop":
             key = bytes32.from_hexstr(asset_id)
         while True:
             records: Dict[bytes32, TradeRecord] = {}
@@ -2912,7 +2912,7 @@ class WalletRpcApi:
             kop_coins = set([Coin.from_json_dict(xch_coin) for xch_coin in xch_coin_list])
         kop_change_target = request.get("kop_change_target", None)
         if kop_change_target is not None:
-            if kop_change_target[:2] == "xch":
+            if kop_change_target[:2] == "kop":
                 xch_change_ph = decode_puzzle_hash(kop_change_target)
             else:
                 xch_change_ph = bytes32(hexstr_to_bytes(kop_change_target))

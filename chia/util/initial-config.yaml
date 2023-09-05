@@ -85,7 +85,7 @@ network_overrides: &network_overrides
       PLOT_FILTER_32_HEIGHT: 13056556
   config:
     mainnet:
-      address_prefix: "xch"
+      address_prefix: "kop"
       default_full_node_port: 44411
     testnet0:
       address_prefix: "tkop"
