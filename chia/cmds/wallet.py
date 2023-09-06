@@ -131,7 +131,7 @@ def get_transactions_cmd(
     )
 
 
-@wallet_cmd.command("send", help="Send chia to another wallet")
+@wallet_cmd.command("send", help="Send cryptomines to another wallet")
 @click.option(
     "-wp",
     "--wallet-rpc-port",
@@ -141,7 +141,7 @@ def get_transactions_cmd(
 )
 @options.create_fingerprint()
 @click.option("-i", "--id", help="Id of the wallet to use", type=int, default=1, show_default=True, required=True)
-@click.option("-a", "--amount", help="How much chia to send, in KOP", type=str, required=True)
+@click.option("-a", "--amount", help="How much cryptomines to send, in KOP", type=str, required=True)
 @click.option("-e", "--memo", help="Additional memo for the transaction", type=str, default=None)
 @click.option(
     "-m",

@@ -27,7 +27,7 @@ dependencies = [
     "filelock==3.12.2",  # For reading and writing config multiprocess and multithread safely  (non-reentrant locks)
     "keyring==23.13.1",  # Store keys in MacOS Keychain, Windows Credential Locker
     "PyYAML==6.0.1",  # Used for config file format
-    "setproctitle==1.3.2",  # Gives the chia processes readable names
+    "setproctitle==1.3.2",  # Gives the cryptomines processes readable names
     "sortedcontainers==2.4.0",  # For maintaining sorted mempools
     "click==8.1.3",  # For the CLI
     "dnspython==2.4.1",  # Query DNS seeds
@@ -92,21 +92,21 @@ kwargs = dict(
     packages=find_packages(include=["build_scripts", "chia", "chia.*", "mozilla-ca"]),
     entry_points={
         "console_scripts": [
-            "chia = chia.cmds.chia:main",
-            "chia_daemon = chia.daemon.server:main",
-            "chia_wallet = chia.server.start_wallet:main",
-            "chia_full_node = chia.server.start_full_node:main",
-            "chia_harvester = chia.server.start_harvester:main",
-            "chia_farmer = chia.server.start_farmer:main",
-            "chia_introducer = chia.server.start_introducer:main",
-            "chia_crawler = chia.seeder.start_crawler:main",
-            "chia_seeder = chia.seeder.dns_server:main",
-            "chia_timelord = chia.server.start_timelord:main",
-            "chia_timelord_launcher = chia.timelord.timelord_launcher:main",
-            "chia_full_node_simulator = chia.simulator.start_simulator:main",
-            "chia_data_layer = chia.server.start_data_layer:main",
-            "chia_data_layer_http = chia.data_layer.data_layer_server:main",
-            "chia_data_layer_s3_plugin = chia.data_layer.s3_plugin_service:run_server",
+            "cryptomines = chia.cmds.chia:main",
+            "cryptomines_daemon = chia.daemon.server:main",
+            "cryptomines_wallet = chia.server.start_wallet:main",
+            "cryptomines_full_node = chia.server.start_full_node:main",
+            "cryptomines_harvester = chia.server.start_harvester:main",
+            "cryptomines_farmer = chia.server.start_farmer:main",
+            "cryptomines_introducer = chia.server.start_introducer:main",
+            "cryptomines_crawler = chia.seeder.start_crawler:main",
+            "cryptomines_seeder = chia.seeder.dns_server:main",
+            "cryptomines_timelord = chia.server.start_timelord:main",
+            "cryptomines_timelord_launcher = chia.timelord.timelord_launcher:main",
+            "cryptomines_full_node_simulator = chia.simulator.start_simulator:main",
+            "cryptomines_data_layer = chia.server.start_data_layer:main",
+            "cryptomines_data_layer_http = chia.data_layer.data_layer_server:main",
+            "cryptomines_data_layer_s3_plugin = chia.data_layer.s3_plugin_service:run_server",
         ]
     },
     package_data={

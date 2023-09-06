@@ -35,8 +35,8 @@ CONTEXT_SETTINGS = dict(help_option_names=["-h", "--help"])
 
 
 @click.group(
-    help=f"\n  Manage chia blockchain infrastructure ({__version__})\n",
-    epilog="Try 'chia start node', 'chia netspace -d 192', or 'chia show -s'",
+    help=f"\n  Manage cryptomines blockchain infrastructure ({__version__})\n",
+    epilog="Try 'cryptomines start node', 'cryptomines netspace -d 192', or 'cryptomines show -s'",
     context_settings=CONTEXT_SETTINGS,
 )
 @click.option("--root-path", default=DEFAULT_ROOT_PATH, help="Config file root", type=click.Path(), show_default=True)
@@ -84,18 +84,18 @@ def cli(
     check_ssl(Path(root_path))
 
 
-@cli.command("version", help="Show chia version")
+@cli.command("version", help="Show cryptomines version")
 def version_cmd() -> None:
     print(__version__)
 
 
-@cli.command("run_daemon", help="Runs chia daemon")
+@cli.command("run_daemon", help="Runs cryptomines daemon")
 @click.option(
     "--wait-for-unlock",
     help="If the keyring is passphrase-protected, the daemon will wait for an unlock command before accessing keys",
     default=False,
     is_flag=True,
-    hidden=True,  # --wait-for-unlock is only set when launched by chia start <service>
+    hidden=True,  # --wait-for-unlock is only set when launched by cryptomines start <service>
 )
 @click.pass_context
 def run_daemon_cmd(ctx: click.Context, wait_for_unlock: bool) -> None:

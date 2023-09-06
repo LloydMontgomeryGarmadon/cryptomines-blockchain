@@ -13,7 +13,7 @@ if [ "${SCRIPT_DIR}" != "$(pwd)" ]; then
 fi
 
 if [ -z "$VIRTUAL_ENV" ]; then
-  echo "This requires the chia python virtual environment."
+  echo "This requires the cryptomines python virtual environment."
   echo "Execute '. ./activate' before running."
   exit 1
 fi
@@ -208,7 +208,7 @@ if [ ! "$CI" ]; then
   npm audit fix || true
   npm run build
 
-  # Set modified output of `chia version` to version property of GUI's package.json
+  # Set modified output of `cryptomines version` to version property of GUI's package.json
   python ../installhelper.py
 else
   echo "Skipping node.js in install.sh on MacOS ci."

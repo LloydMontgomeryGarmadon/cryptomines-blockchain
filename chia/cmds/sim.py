@@ -91,7 +91,7 @@ def create_simulator_config(
     )
 
 
-@sim_cmd.command("start", help="Start service groups while automatically using the right chia_root.")
+@sim_cmd.command("start", help="Start service groups while automatically using the right cryptomines_root.")
 @click.option("-r", "--restart", is_flag=True, help="Restart running services")
 @click.option("-w", "--wallet", is_flag=True, help="Start wallet")
 @click.pass_context
@@ -104,7 +104,7 @@ def sim_start_cmd(ctx: click.Context, restart: bool, wallet: bool) -> None:
     ctx.invoke(start_cmd, restart=restart, group=group)
 
 
-@sim_cmd.command("stop", help="Stop running services while automatically using the right chia_root.")
+@sim_cmd.command("stop", help="Stop running services while automatically using the right cryptomines_root.")
 @click.option("-d", "--daemon", is_flag=True, help="Stop daemon")
 @click.option("-w", "--wallet", is_flag=True, help="Stop wallet")
 @click.pass_context

@@ -52,13 +52,13 @@ def show_cmd(
     import asyncio
 
     if connections:
-        print("'chia show -c' has been renamed to 'chia peer full_node -c' ")
+        print("'cryptomines show -c' has been renamed to 'cryptomines peer full_node -c' ")
     if add_connection != "":
-        print("'chia show -a' has been renamed to 'chia peer full_node -a' ")
+        print("'cryptomines show -a' has been renamed to 'cryptomines peer full_node -a' ")
     if remove_connection != "":
-        print("'chia show -r' has been renamed to 'chia peer full_node -r' ")
+        print("'cryptomines show -r' has been renamed to 'cryptomines peer full_node -r' ")
     if wallet_rpc_port is not None:
-        print("'chia show -wp' is not used, please remove it from your command.")
+        print("'cryptomines show -wp' is not used, please remove it from your command.")
     asyncio.run(
         show_async(
             rpc_port,

@@ -12,12 +12,12 @@ from chia.util.misc import format_bytes, prompt_yes_no, validate_directory_writa
 
 
 def default_beta_root_path() -> Path:
-    return Path(os.path.expanduser(os.getenv("CRYPTOINES_BETA_ROOT", "~/chia-beta-test"))).resolve()
+    return Path(os.path.expanduser(os.getenv("CRYPTOINES_BETA_ROOT", "~/cryptomines-beta-test"))).resolve()
 
 
 def warn_if_beta_enabled(config: Dict[str, Any]) -> None:
     if config.get("beta", {}).get("enabled", False):
-        print("\nWARNING: beta test mode is enabled. Run `chia beta disable` if this is unintentional.\n")
+        print("\nWARNING: beta test mode is enabled. Run `cryptomines beta disable` if this is unintentional.\n")
 
 
 def prompt_beta_warning() -> bool:

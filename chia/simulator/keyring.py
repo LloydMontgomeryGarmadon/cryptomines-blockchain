@@ -62,7 +62,7 @@ class TempKeyring:
         self,
         *,
         user: str = "testing-1.8.0",
-        service: str = "testing-chia-1.8.0",
+        service: str = "testing-cryptomines-1.8.0",
         populate: bool = False,
         existing_keyring_path: Optional[str] = None,
         delete_on_cleanup: bool = True,

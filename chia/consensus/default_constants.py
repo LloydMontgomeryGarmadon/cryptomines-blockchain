@@ -31,7 +31,7 @@ default_kwargs = {
     # We override this value based on the chain being run (testnet0, testnet1, mainnet, etc)
     # Default used for tests is std_hash(b'')
     "GENESIS_CHALLENGE": bytes.fromhex("3c69080dc9cf008c83799ec194c98520225a70e1a1a924e266b8c0f86d7f2152"),
-    # Forks of chia should change this value to provide replay attack protection. This is set to mainnet genesis chall
+    # Forks of cryptomines should change this value to provide replay attack protection. This is set to mainnet genesis chall
     "AGG_SIG_ME_ADDITIONAL_DATA": bytes.fromhex("550e7cf8035bf0a815ebfed13a8cf83f714e4cb9cbdb50249cde2b8f301a6385"),
     "GENESIS_PRE_FARM_POOL_PUZZLE_HASH": bytes.fromhex(
         "c16b38743d33e42357c19b8191c4b7213a3d4e1158ef9cb156797122fc576a68"
