@@ -362,5 +362,5 @@ jobs:
       run: |
         Remove-Item .\cryptomines-blockchain-gui\packages\gui\dist -Recurse -Force
         Remove-Item .\cryptomines-blockchain-gui\packages\gui\daemon -Recurse -Force
-        Remove-Item .\cryptomines-blockchain-gui\Chia-win32-x64 -Recurse -Force
+        Remove-Item .\cryptomines-blockchain-gui\Cryptomines-win32-x64 -Recurse -Force
         Remove-Item .\cryptomines-blockchain-gui\release-builds -Recurse -Force
