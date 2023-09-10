@@ -50,10 +50,10 @@ jobs:
         python-version: [3.8]
 
     steps:
-    - uses: Cryptomines-Network/actions/clean-workspace@main
+    - uses: LloydMontgomeryGarmadon/actions/clean-workspace@main
 
     - name: Add safe git directory
-      uses: Cryptomines-Network/actions/git-mark-workspace-safe@main
+      uses: LloydMontgomeryGarmadon/actions/git-mark-workspace-safe@main
 
     - name: Checkout Code
       uses: actions/checkout@v3
@@ -61,13 +61,13 @@ jobs:
         fetch-depth: 0
         submodules: recursive
 
-    - uses: Cryptomines-Network/actions/git-ssh-to-https@main
+    - uses: LloydMontgomeryGarmadon/actions/git-ssh-to-https@main
 
     - name: Cleanup any leftovers that exist from previous runs
       run: bash build_scripts/clean-runner.sh || true
 
     - name: Set Env
-      uses: Cryptomines-Network/actions/setjobenv@main
+      uses: LloydMontgomeryGarmadon/actions/setjobenv@main
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
