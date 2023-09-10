@@ -55,7 +55,7 @@ jobs:
         submodules: recursive
 
     - name: Set Env
-      uses: Chia-Network/actions/setjobenv@main
+      uses: Cryptomines-Network/actions/setjobenv@main
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -103,7 +103,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-pip-
 
-    - uses: Chia-Network/actions/setup-python@main
+    - uses: Cryptomines-Network/actions/setup-python@main
       name: Install Python ${{ matrix.python-version }}
       with:
         python-version: ${{ matrix.python-version }}

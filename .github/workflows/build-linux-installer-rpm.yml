@@ -57,13 +57,13 @@ jobs:
         fetch-depth: 0
         submodules: recursive
 
-    - uses: Chia-Network/actions/git-ssh-to-https@main
+    - uses: Cryptomines-Network/actions/git-ssh-to-https@main
 
     - name: Cleanup any leftovers that exist from previous runs
       run: bash build_scripts/clean-runner.sh || true
 
     - name: Set Env
-      uses: Chia-Network/actions/setjobenv@main
+      uses: Cryptomines-Network/actions/setjobenv@main
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -79,7 +79,7 @@ jobs:
           echo "TAG_TYPE=rc" >> "$GITHUB_OUTPUT"
         fi
 
-    - uses: Chia-Network/actions/enforce-semver@main
+    - uses: Cryptomines-Network/actions/enforce-semver@main
       if: env.FULL_RELEASE == 'true'
 
     # Create our own venv outside of the git directory JUST for getting the ACTUAL version so that install can't break it

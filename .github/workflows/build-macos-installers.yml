@@ -62,7 +62,7 @@ jobs:
             bladebit-suffix: macos-arm64.tar.gz
 
     steps:
-      - uses: Chia-Network/actions/clean-workspace@main
+      - uses: Cryptomines-Network/actions/clean-workspace@main
 
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -70,13 +70,13 @@ jobs:
           fetch-depth: 0
           submodules: recursive
 
-      - uses: Chia-Network/actions/git-ssh-to-https@main
+      - uses: Cryptomines-Network/actions/git-ssh-to-https@main
 
       - name: Cleanup any leftovers that exist from previous runs
         run: bash build_scripts/clean-runner.sh || true
 
       - name: Set Env
-        uses: Chia-Network/actions/setjobenv@main
+        uses: Cryptomines-Network/actions/setjobenv@main
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MACOSX_DEPLOYMENT_TARGET: 11
@@ -124,7 +124,7 @@ jobs:
           deactivate
 
       - name: Setup Python environment
-        uses: Chia-Network/actions/setup-python@main
+        uses: Cryptomines-Network/actions/setup-python@main
         with:
           python-version: ${{ matrix.python-version }}
           force-pyenv: 'true'
