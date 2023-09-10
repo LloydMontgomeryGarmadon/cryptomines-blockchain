@@ -148,6 +148,27 @@ def header_block_to_sub_block_record(
     else:
         cc_sp_hash = block.reward_chain_block.challenge_chain_sp_vdf.output.get_hash()
 
+    if (
+        block.execution_payload is None
+        or len(block.execution_payload.withdrawals) == 0
+    ):
+        last_withdrawal_index = None
+    else:
+        last_withdrawal_index = block.execution_payload.withdrawals[-1].index
+
+    if block.foliage_transaction_block is not None:
+        if block.execution_payload is None:
+            execution_block_height = 0
+            execution_timestamp = 0
+        else:
+            execution_block_height = block.execution_payload.blockNumber
+            execution_timestamp = block.execution_payload.timestamp
+        execution_block_hash = block.foliage_transaction_block.execution_block_hash
+    else:
+        execution_block_height = None
+        execution_block_hash = None
+        execution_timestamp = None
+
     return BlockRecord(
         block.header_hash,
         block.prev_header_hash,
@@ -160,6 +181,7 @@ def header_block_to_sub_block_record(
         block.reward_chain_block.get_hash(),
         cbi.get_hash(),
         sub_slot_iters,
+        block.foliage.foliage_block_data.coinbase,
         block.foliage.foliage_block_data.pool_target.puzzle_hash,
         block.foliage.foliage_block_data.farmer_reward_puzzle_hash,
         required_iters,
@@ -170,6 +192,10 @@ def header_block_to_sub_block_record(
         cc_sp_hash,
         timestamp,
         prev_transaction_block_hash,
+        execution_block_height,
+        execution_block_hash,
+        last_withdrawal_index,
+        execution_timestamp,
         fees,
         reward_claims_incorporated,
         finished_challenge_slot_hashes,

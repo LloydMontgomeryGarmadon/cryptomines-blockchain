@@ -1,9 +1,14 @@
 from __future__ import annotations
 
 from chia.util.ints import uint32, uint64
+from chia.types.blockchain_format.execution_payload import WithdrawalV1
+from chia.consensus.block_record import BlockRecord
+from chia.consensus.blockchain_interface import BlockchainInterface
+from chia.consensus.constants import ConsensusConstants
 
 # 1 Cryptomines coin = 1,000,000,000,000 = 1 trillion mojo.
 _mojo_per_chia = 1000000000000
+_bpx_to_gwei = 1000000000
 _blocks_per_year = 1681920  # 32 * 6 * 24 * 365
 
 
@@ -51,3 +56,52 @@ def calculate_base_farmer_reward(height: uint32) -> uint64:
         return uint64(int((1 / 8) * 0.125 * _mojo_per_chia))
     else:
         return uint64(int((1 / 8) * 0.0625 * _mojo_per_chia))
+
+
+def create_withdrawals(
+    constants: ConsensusConstants,
+    prev_tx_block: BlockRecord,
+    blocks: BlockchainInterface,
+) -> List[WithdrawalV1]:
+    withdrawals: List[WithdrawalV1] = []
+    
+    next_wd_index: uint64
+    if prev_tx_block.last_withdrawal_index is None:
+        next_wd_index = 0
+    else:
+        next_wd_index = prev_tx_block.last_withdrawal_index + 1
+    
+    # Add block rewards
+    curr: BlockRecord = prev_tx_block
+    while True:
+        withdrawals.append(
+            WithdrawalV1(
+                next_wd_index,
+                uint64(1),
+                curr.coinbase,
+                _calculate_v3_reward(curr.height + 1),
+            )
+        )
+        next_wd_index += 1
+        
+        if curr.prev_hash == constants.GENESIS_CHALLENGE:
+            break
+        curr = blocks.block_record(curr.prev_hash)
+        if curr.is_transaction_block:
+            break
+    
+    return withdrawals
+
+def _calculate_v3_reward(
+    v3_height: uint64 
+) -> uint64:
+    if v3_height < 2 * _blocks_per_year:
+        return uint64(1 * _bpx_to_gwei)
+    elif v3_height < 5 * _blocks_per_year:
+        return uint64(0.5 * _bpx_to_gwei)
+    elif v3_height < 8 * _blocks_per_year:
+        return uint64(0.25 * _bpx_to_gwei)
+    elif v3_height < 11 * _blocks_per_year:
+        return uint64(0.125 * _bpx_to_gwei)
+    else:
+        return uint64(0.0625 * _bpx_to_gwei)
