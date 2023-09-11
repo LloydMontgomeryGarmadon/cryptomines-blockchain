@@ -31,12 +31,14 @@ from chia.util.errors import Err
 from chia.util.generator_tools import tx_removals_and_additions
 from chia.util.hash import std_hash
 from chia.util.ints import uint32, uint64
+from chia.full_node.execution_client import ExecutionClient
 
 log = logging.getLogger(__name__)
 
 
 async def validate_block_body(
     constants: ConsensusConstants,
+    execution_client: ExecutionClient,
     blocks: BlockchainInterface,
     block_store: BlockStore,
     coin_store: CoinStore,
@@ -61,6 +63,18 @@ async def validate_block_body(
         assert height == block.height
     prev_transaction_block_height: uint32 = uint32(0)
     prev_transaction_block_timestamp: uint64 = uint64(0)
+
+    if block.execution_payload is not None:
+        status = await execution_client.new_payload(block.execution_payload)
+
+        if status == "INVALID":
+            return Err.EXECUTION_INVALID_PAYLOAD, None
+        elif status == "SYNCING":
+            return Err.EXECUTION_SYNCING, None
+        elif status == "ACCEPTED":
+            log.warning(f"Execution chain reorg at height {block.height}!")
+        elif status != "VALID":
+            return Err.UNKNOWN, None
 
     # We repeat the ProofOfSpace check from block header validation here, because we want to fetch blocks
     # from the database too (BlockStore). In `BlockHeaderValidation` we don't have access to the database,

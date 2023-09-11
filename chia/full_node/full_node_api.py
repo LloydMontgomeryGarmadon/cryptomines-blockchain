@@ -48,7 +48,7 @@ from chia.types.block_protocol import BlockInfo
 from chia.types.blockchain_format.coin import Coin, hash_coin_ids
 from chia.types.blockchain_format.pool_target import PoolTarget
 from chia.types.blockchain_format.proof_of_space import verify_and_get_quality_string
-from chia.types.blockchain_format.sized_bytes import bytes32
+from chia.types.blockchain_format.sized_bytes import bytes20, bytes32
 from chia.types.blockchain_format.sub_epoch_summary import SubEpochSummary
 from chia.types.coin_record import CoinRecord
 from chia.types.end_of_slot_bundle import EndOfSubSlotBundle
@@ -909,6 +909,7 @@ class FullNodeAPI:
             self.log.info("Starting to make the unfinished block")
             unfinished_block: UnfinishedBlock = create_unfinished_block(
                 self.full_node.constants,
+                self.full_node.execution_client,
                 total_iters_pos_slot,
                 sub_slot_iters,
                 request.signage_point_index,
@@ -916,6 +917,7 @@ class FullNodeAPI:
                 ip_iters,
                 request.proof_of_space,
                 cc_challenge_hash,
+                bytes20.from_hexstr(self.full_node.config["coinbase"]),
                 farmer_ph,
                 pool_target,
                 get_plot_sig,
@@ -956,6 +958,7 @@ class FullNodeAPI:
             if unfinished_block.is_transaction_block() and unfinished_block.transactions_generator is not None:
                 unfinished_block_backup = create_unfinished_block(
                     self.full_node.constants,
+                    self.full_node.execution_client,
                     total_iters_pos_slot,
                     sub_slot_iters,
                     request.signage_point_index,
@@ -963,6 +966,7 @@ class FullNodeAPI:
                     ip_iters,
                     request.proof_of_space,
                     cc_challenge_hash,
+                    bytes20.from_hexstr(self.full_node.config["coinbase"]),
                     farmer_ph,
                     pool_target,
                     get_plot_sig,
@@ -1029,7 +1033,7 @@ class FullNodeAPI:
             await self.full_node.add_unfinished_block(new_candidate, None, True)
         except Exception as e:
             # If we have an error with this block, try making an empty block
-            self.full_node.log.error(f"Error farming block {e} {new_candidate}")
+            self.full_node.log.error(f"Error farming block {e} {traceback.format_exc()} {request}")
             candidate_tuple = self.full_node.full_node_store.get_candidate_block(
                 farmer_request.quality_string, backup=True
             )
