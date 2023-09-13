@@ -49,11 +49,11 @@ bash ./build_license_directory.sh
 
 # Builds CLI only rpm
 CLI_RPM_BASE="cryptomines-blockchain-cli-$CRYPTOMINES_INSTALLER_VERSION-1.$REDHAT_PLATFORM"
-mkdir -p "dist/$CLI_RPM_BASE/opt/cryptomines"
+mkdir -p "dist/$CLI_RPM_BASE/opt/chia"
 mkdir -p "dist/$CLI_RPM_BASE/usr/bin"
-cp -r dist/daemon/* "dist/$CLI_RPM_BASE/opt/cryptomines/"
+cp -r dist/daemon/* "dist/$CLI_RPM_BASE/opt/chia/"
 
-ln -s ../../opt/cryptomines/cryptomines "dist/$CLI_RPM_BASE/usr/bin/cryptomines"
+ln -s ../../opt/chia/chia "dist/$CLI_RPM_BASE/usr/bin/chia"
 # This is built into the base build image
 # shellcheck disable=SC1091
 . /etc/profile.d/rvm.sh
@@ -85,7 +85,7 @@ OPT_ARCH="--x64"
 if [ "$REDHAT_PLATFORM" = "arm64" ]; then
   OPT_ARCH="--arm64"
 fi
-PRODUCT_NAME="cryptomines"
+PRODUCT_NAME="chia"
 echo electron-builder build --linux rpm "${OPT_ARCH}" \
   --config.extraMetadata.name=cryptomines-blockchain \
   --config.productName="${PRODUCT_NAME}" --config.linux.desktop.Name="Cryptomines Blockchain" \

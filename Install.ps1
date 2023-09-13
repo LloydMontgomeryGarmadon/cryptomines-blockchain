@@ -133,4 +133,4 @@ Write-Output "https://github.com/Cryptomines-Network/cryptomines-blockchain/wiki
 Write-Output ""
 Write-Output "To install the GUI run '.\venv\scripts\Activate.ps1' then '.\Install-gui.ps1'."
 Write-Output ""
-Write-Output "Type '.\venv\Scripts\Activate.ps1' and then 'cryptomines init' to begin."
+Write-Output "Type '.\venv\Scripts\Activate.ps1' and then 'chia init' to begin."

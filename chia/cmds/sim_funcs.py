@@ -48,13 +48,13 @@ def create_chia_directory(
     docker_mode: bool,
 ) -> Dict[str, Any]:
     """
-    This function creates a new cryptomines directory and returns a heavily modified config,
+    This function creates a new chia directory and returns a heavily modified config,
     suitable for use in the simulator.
     """
     from chia.cmds.init_funcs import chia_init
 
     if not chia_root.is_dir() or not Path(chia_root / "config" / "config.yaml").exists():
-        # create cryptomines directories & load config
+        # create chia directories & load config
         chia_init(chia_root, testnet=True, fix_ssl_permissions=True)
         config: Dict[str, Any] = load_config(chia_root, "config.yaml")
         # apply standard block-tools config.
@@ -126,7 +126,7 @@ def create_chia_directory(
 
 def display_key_info(fingerprint: int, prefix: str) -> None:
     """
-    Display key info for a given fingerprint, similar to the output of `cryptomines keys show`.
+    Display key info for a given fingerprint, similar to the output of `chia keys show`.
     """
     print(f"Using fingerprint {fingerprint}")
     private_key_and_seed = Keychain().get_private_key_by_fingerprint(fingerprint)
@@ -278,7 +278,7 @@ async def async_config_wizard(
         # user cancelled wizard
         return
     # create chia directory & get config.
-    print("Creating cryptomines directory & config...")
+    print("Creating chia directory & config...")
     config = create_chia_directory(root_path, fingerprint, farming_address, plot_directory, auto_farm, docker_mode)
     # Pre-generate plots by running block_tools init functions.
     print("Please Wait, Generating plots...")
@@ -405,7 +405,7 @@ async def print_status(
                     "No fingerprint in config, either rerun 'cdv sim create' "
                     "or use --fingerprint to specify one, skipping key information."
                 )
-        # chain status ( basically cryptomines show -s)
+        # chain status ( basically chia show -s)
         await print_blockchain_state(node_client, config)
         print("")
         # farming information

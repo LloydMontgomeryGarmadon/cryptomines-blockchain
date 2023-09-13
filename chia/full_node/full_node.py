@@ -474,7 +474,7 @@ class FullNode:
             dns_servers = self.config["dns_servers"]
         elif network_name == "mainnet":
             # If `dns_servers` is missing from the `config`, hardcode it if we're running mainnet.
-            dns_servers.append("dns-introducer.cryptominesblockchain.pl")
+            dns_servers.append("dns-introducer.chiablockchain.pl")
         try:
             self.full_node_peers = FullNodePeers(
                 self.server,

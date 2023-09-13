@@ -54,13 +54,13 @@ bash ./build_license_directory.sh
 # need j2 for templating the control file
 pip install j2cli
 CLI_DEB_BASE="cryptomines-blockchain-cli_$CRYPTOMINES_INSTALLER_VERSION-1_$PLATFORM"
-mkdir -p "dist/$CLI_DEB_BASE/opt/cryptomines"
+mkdir -p "dist/$CLI_DEB_BASE/opt/chia"
 mkdir -p "dist/$CLI_DEB_BASE/usr/bin"
 mkdir -p "dist/$CLI_DEB_BASE/DEBIAN"
 j2 -o "dist/$CLI_DEB_BASE/DEBIAN/control" assets/deb/control.j2
-cp -r dist/daemon/* "dist/$CLI_DEB_BASE/opt/cryptomines/"
+cp -r dist/daemon/* "dist/$CLI_DEB_BASE/opt/chia/"
 
-ln -s ../../opt/cryptomines/cryptomines "dist/$CLI_DEB_BASE/usr/bin/cryptomines"
+ln -s ../../opt/chia/chia "dist/$CLI_DEB_BASE/usr/bin/chia"
 dpkg-deb --build --root-owner-group "dist/$CLI_DEB_BASE"
 # CLI only .deb done
 
@@ -74,7 +74,7 @@ cp package.json package.json.orig
 jq --arg VER "$CRYPTOMINES_INSTALLER_VERSION" '.version=$VER' package.json > temp.json && mv temp.json package.json
 
 echo "Building Linux(deb) Electron app"
-PRODUCT_NAME="cryptomines"
+PRODUCT_NAME="chia"
 if [ "$PLATFORM" = "arm64" ]; then
   # electron-builder does not work for arm64 as of Aug 16, 2022.
   # This is a temporary fix.
