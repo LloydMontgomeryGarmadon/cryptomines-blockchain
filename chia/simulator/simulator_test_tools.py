@@ -65,7 +65,7 @@ def create_config(
     node_certs_and_keys: Dict[str, Dict[str, Dict[str, bytes]]],
     keychain: Keychain,
 ) -> Dict[str, Any]:
-    # create cryptomines directories
+    # create chia directories
     create_default_chia_config(chia_root)
     create_all_ssl(
         chia_root,
@@ -123,11 +123,11 @@ async def get_full_chia_simulator(
     config: Optional[Dict[str, Any]] = None,
 ) -> AsyncGenerator[Tuple[FullNodeSimulator, Path, Dict[str, Any], str, int, Keychain], None]:
     """
-    A cryptomines root Path is required.
-    The cryptomines root Path can be a temporary directory (tempfile.TemporaryDirectory)
+    A chia root Path is required.
+    The chia root Path can be a temporary directory (tempfile.TemporaryDirectory)
     Passing in a Keychain prevents test keys from being added to the default key location
     This test can either be run in automated mode or not, which determines which mode block tools run in.
-    This test is fully interdependent and can be used without the rest of the cryptomines test suite.
+    This test is fully interdependent and can be used without the rest of the chia test suite.
     Please refer to the documentation for more information.
     """
 

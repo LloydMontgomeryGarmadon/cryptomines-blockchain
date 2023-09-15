@@ -1,6 +1,6 @@
 """
 NOTE: This contains duplicate code from `chia.cmds.plots`.
-After `cryptomines plots create` becomes obsolete, consider removing it from there.
+After `chia plots create` becomes obsolete, consider removing it from there.
 """
 from __future__ import annotations
 

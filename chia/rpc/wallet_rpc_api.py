@@ -1374,7 +1374,7 @@ class WalletRpcApi:
         input_message: str = request["message"]
         signing_mode_str: Optional[str] = request.get("signing_mode")
         # Default to BLS_MESSAGE_AUGMENTATION_HEX_INPUT as this RPC was originally designed to verify
-        # signatures made by `cryptomines keys sign`, which uses BLS_MESSAGE_AUGMENTATION_HEX_INPUT
+        # signatures made by `chia keys sign`, which uses BLS_MESSAGE_AUGMENTATION_HEX_INPUT
         if signing_mode_str is None:
             signing_mode = SigningMode.BLS_MESSAGE_AUGMENTATION_HEX_INPUT
         else:

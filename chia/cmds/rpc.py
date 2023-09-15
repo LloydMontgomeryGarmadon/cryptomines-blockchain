@@ -63,7 +63,7 @@ async def call_daemon_command(
     daemon = await connect_to_daemon_and_validate(DEFAULT_ROOT_PATH, config, quiet=quiet)
 
     if daemon is None:
-        raise Exception("Failed to connect to cryptomines daemon")
+        raise Exception("Failed to connect to chia daemon")
 
     result: Dict[str, Any]
     try:

@@ -557,7 +557,7 @@ async def make_offer(
                         file.write(offer.to_bech32())
                     print(f"Created offer with ID {trade_record.trade_id}")
                     print(
-                        f"Use cryptomines wallet get_offers --id " f"{trade_record.trade_id} -f {fingerprint} to view status"
+                        f"Use chia wallet get_offers --id " f"{trade_record.trade_id} -f {fingerprint} to view status"
                     )
                 else:
                     print("Error creating offer")

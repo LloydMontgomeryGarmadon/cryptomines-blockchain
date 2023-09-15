@@ -24,7 +24,7 @@ from chia.util.config import lock_and_load_config, save_config
 
 
 def print_restart_warning() -> None:
-    print("\nRestart the daemon and any running cryptomines services for changes to take effect.")
+    print("\nRestart the daemon and any running chia services for changes to take effect.")
 
 
 @click.group("beta", hidden=True)
@@ -40,7 +40,7 @@ def configure(ctx: click.Context, path: Optional[str], interval: Optional[int]) 
     root_path = ctx.obj["root_path"]
     with lock_and_load_config(root_path, "config.yaml") as config:
         if "beta" not in config:
-            raise click.ClickException("beta test mode is not enabled, enable it first with `cryptomines beta enable`")
+            raise click.ClickException("beta test mode is not enabled, enable it first with `chia beta enable`")
 
         # Adjust the path
         if path is None:
@@ -124,7 +124,7 @@ def prepare_submission_cmd(ctx: click.Context) -> None:
     with lock_and_load_config(ctx.obj["root_path"], "config.yaml") as config:
         beta_root_path = config.get("beta", {}).get("path", None)
         if beta_root_path is None:
-            raise click.ClickException("beta test mode not enabled. Run `cryptomines beta enable` first.")
+            raise click.ClickException("beta test mode not enabled. Run `chia beta enable` first.")
     beta_root_path = Path(beta_root_path)
     validate_beta_path(beta_root_path)
     available_results = sorted([path for path in beta_root_path.iterdir() if path.is_dir()])
@@ -176,7 +176,7 @@ def status(ctx: click.Context) -> None:
     with lock_and_load_config(ctx.obj["root_path"], "config.yaml") as config:
         beta_config = config.get("beta")
         if beta_config is None:
-            raise click.ClickException("beta test mode is not enabled, enable it first with `cryptomines beta enable`")
+            raise click.ClickException("beta test mode is not enabled, enable it first with `chia beta enable`")
 
     print(f"enabled: {beta_config['enabled']}")
     print(f"path: {beta_config['path']}")

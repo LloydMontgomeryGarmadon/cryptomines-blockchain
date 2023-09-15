@@ -81,7 +81,7 @@ kwargs = dict(
     author="Kopalnie Krypto",
     author_email="kontakt@kopalniekrypto.pl",
     description="Cryptomines blockchain full node, farmer, timelord, and wallet.",
-    url="https://cryptominesblockchain.pl/",
+    url="https://chiablockchain.pl/",
     license="Apache License",
     python_requires=">=3.8.1, <4",
     keywords="cryptomines blockchain node",

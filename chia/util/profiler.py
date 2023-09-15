@@ -125,7 +125,7 @@ if __name__ == "__main__":
         for i in range(first, last + 1):
             files.append(str(profile_dir / ("slot-%05d.profile" % i)))
 
-        output_file = "cryptomines-hotspot-%d" % first
+        output_file = "chia-hotspot-%d" % first
         if first < last:
             output_file += "-%d" % last
 

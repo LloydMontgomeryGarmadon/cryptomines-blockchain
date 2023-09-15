@@ -203,7 +203,7 @@ def configure(
             change_made = True
 
         if change_made:
-            print("Restart any running cryptomines services for changes to take effect")
+            print("Restart any running chia services for changes to take effect")
             save_config(root_path, "config.yaml", config)
 
 

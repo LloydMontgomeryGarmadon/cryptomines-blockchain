@@ -267,7 +267,7 @@ jobs:
     - name: Upload Installer to artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: chia-installers-windows-exe-intel
+        name: cryptomines-installers-windows-exe-intel
         path: ${{ github.workspace }}\cryptomines-blockchain-gui\release-builds\
 
     - name: Install AWS CLI
@@ -341,7 +341,7 @@ jobs:
             Authorization="Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}"
         }
         $data = @{
-            chia_ref='$RELEASE_TAG'
+            cryptomines_ref='$RELEASE_TAG'
         }
         $json = $data | ConvertTo-Json
         $response = Invoke-RestMethod '${{ secrets.GLUE_API_URL }}/api/v1/$RFC_REPO-prerelease/$RELEASE_TAG/success/build-windows' -Method Post -Body $json -ContentType 'application/json' -Headers $headers
@@ -353,7 +353,7 @@ jobs:
             Authorization="Bearer ${{ secrets.GLUE_ACCESS_TOKEN }}"
         }
         $data = @{
-            chia_ref='$RELEASE_TAG'
+            cryptomines_ref='$RELEASE_TAG'
         }
         $json = $data | ConvertTo-Json
         $response = Invoke-RestMethod '${{ secrets.GLUE_API_URL }}/api/v1/$RFC_REPO/$RELEASE_TAG/success/build-windows' -Method Post -Body $json -ContentType 'application/json' -Headers $headers

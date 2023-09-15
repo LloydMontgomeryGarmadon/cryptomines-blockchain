@@ -301,7 +301,7 @@ class BlockTools:
                 keychain_proxy = await connect_to_keychain_and_validate(self.root_path, self.log)
             else:  # if we are automated testing or if we don't have a fingerprint.
                 keychain_proxy = await connect_to_keychain_and_validate(
-                    self.root_path, self.log, user="testing-1.8.0", service="cryptomines-testing-1.8.0"
+                    self.root_path, self.log, user="testing-1.8.0", service="chia-testing-1.8.0"
                 )
             assert keychain_proxy is not None
             if fingerprint is None:  # if we are not specifying an existing key
@@ -343,7 +343,7 @@ class BlockTools:
 
             self.farmer_pubkeys: List[G1Element] = [master_sk_to_farmer_sk(sk).get_g1() for sk in self.all_sks]
             if len(self.pool_pubkeys) == 0 or len(self.farmer_pubkeys) == 0:
-                raise RuntimeError("Keys not generated. Run `cryptomines keys generate`")
+                raise RuntimeError("Keys not generated. Run `chia keys generate`")
 
             self.plot_manager.set_public_keys(self.farmer_pubkeys, self.pool_pubkeys)
         finally:
@@ -1784,7 +1784,7 @@ def get_full_block_and_block_record(
     return full_block, block_record, block_time_residual
 
 
-# these are the costs of unknown conditions, as defined cryptomines_rs here:
+# these are the costs of unknown conditions, as defined chia_rs here:
 # https://github.com/Chia-Network/chia_rs/pull/181
 def compute_cost_table() -> List[int]:
     A = 17
