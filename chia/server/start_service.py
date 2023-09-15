@@ -233,7 +233,7 @@ class Service(Generic[_T_RpcServiceProtocol, _T_ApiProtocol]):
     async def setup_process_global_state(self) -> None:
         # Being async forces this to be run from within an active event loop as is
         # needed for the signal handler setup.
-        proctitle_name = f"chia_{self._service_name}"
+        proctitle_name = f"cryptomines_{self._service_name}"
         setproctitle(proctitle_name)
 
         global main_pid

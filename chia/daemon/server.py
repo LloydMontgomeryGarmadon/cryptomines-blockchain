@@ -62,7 +62,7 @@ except ModuleNotFoundError:
 
 log = logging.getLogger(__name__)
 
-service_plotter = "chia_plotter"
+service_plotter = "cryptomines_plotter"
 
 
 class PlotState(str, Enum):
@@ -80,19 +80,19 @@ class PlotEvent(str, Enum):
 # determine if application is a script file or frozen exe
 if getattr(sys, "frozen", False):
     name_map = {
-        "chia": "chia",
-        "chia_data_layer": "start_data_layer",
-        "chia_data_layer_http": "start_data_layer_http",
-        "chia_wallet": "start_wallet",
-        "chia_full_node": "start_full_node",
-        "chia_harvester": "start_harvester",
-        "chia_farmer": "start_farmer",
-        "chia_introducer": "start_introducer",
-        "chia_timelord": "start_timelord",
-        "chia_timelord_launcher": "timelord_launcher",
-        "chia_full_node_simulator": "start_simulator",
-        "chia_seeder": "start_seeder",
-        "chia_crawler": "start_crawler",
+        "cryptomines": "cryptomines",
+        "cryptomines_data_layer": "start_data_layer",
+        "cryptomines_data_layer_http": "start_data_layer_http",
+        "cryptomines_wallet": "start_wallet",
+        "cryptomines_full_node": "start_full_node",
+        "cryptomines_harvester": "start_harvester",
+        "cryptomines_farmer": "start_farmer",
+        "cryptomines_introducer": "start_introducer",
+        "cryptomines_timelord": "start_timelord",
+        "cryptomines_timelord_launcher": "timelord_launcher",
+        "cryptomines_full_node_simulator": "start_simulator",
+        "cryptomines_seeder": "start_seeder",
+        "cryptomines_crawler": "start_crawler",
     }
 
     def executable_for_service(service_name: str) -> str:
@@ -960,11 +960,11 @@ class WebSocketServer:
 
     def _build_plotting_command_args(self, request: Any, ignoreCount: bool, index: int) -> List[str]:
         plotter: str = request.get("plotter", "chiapos")
-        command_args: List[str] = ["chia", "plotters", plotter]
+        command_args: List[str] = ["cryptomines", "plotters", plotter]
 
         if plotter == "bladebit":
             # plotter command must be either
-            # 'chia plotters bladebit ramplot' or 'chia plotters bladebit diskplot'
+            # 'cryptomines plotters bladebit ramplot' or 'cryptomines plotters bladebit diskplot'
             plot_type = request["plot_type"]
             assert plot_type == "diskplot" or plot_type == "ramplot" or plot_type == "cudaplot"
             command_args.append(plot_type)
@@ -1279,7 +1279,7 @@ class WebSocketServer:
         if self.webserver is not None:
             self.webserver.close()
             await self.webserver.await_closed()
-        log.info("chia daemon exiting")
+        log.info("cryptomines daemon exiting")
 
     async def register_service(self, websocket: WebSocketResponse, request: Dict[str, Any]) -> Dict[str, Any]:
         self.log.info(f"Register service {request}")
@@ -1487,7 +1487,7 @@ async def async_run_daemon(root_path: Path, wait_for_unlock: bool = False) -> in
     # since it might be necessary to wait for the GUI to unlock the keyring first.
     chia_init(root_path, should_check_keys=(not wait_for_unlock))
     config = load_config(root_path, "config.yaml")
-    setproctitle("chia_daemon")
+    setproctitle("cryptomines_daemon")
     initialize_service_logging("daemon", config)
     crt_path = root_path / config["daemon_ssl"]["private_crt"]
     key_path = root_path / config["daemon_ssl"]["private_key"]

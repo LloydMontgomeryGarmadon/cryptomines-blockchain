@@ -15,7 +15,7 @@ Write-Output "Cryptomines Version is: $env:CRYPTOMINES_INSTALLER_VERSION"
 Write-Output "   ---"
 
 Write-Output "   ---"
-Write-Output "Use pyinstaller to create chia .exe's"
+Write-Output "Use pyinstaller to create cryptomines .exe's"
 Write-Output "   ---"
 $SPEC_FILE = (python -c 'import chia; print(chia.PYINSTALLER_SPEC_PATH)') -join "`n"
 pyinstaller --log-level INFO $SPEC_FILE
@@ -26,7 +26,7 @@ Write-Output "   ---"
 bash ./build_win_license_dir.sh
 
 Write-Output "   ---"
-Write-Output "Copy chia executables to cryptomines-blockchain-gui\"
+Write-Output "Copy cryptomines executables to cryptomines-blockchain-gui\"
 Write-Output "   ---"
 Copy-Item "dist\daemon" -Destination "..\cryptomines-blockchain-gui\packages\gui\" -Recurse
 
@@ -48,9 +48,9 @@ $Env:NODE_OPTIONS = "--max-old-space-size=3000"
 Set-Location -Path "cryptomines-blockchain-gui\packages\gui" -PassThru
 
 Write-Output "   ---"
-Write-Output "Increase the stack for chia command for (chia plots create) chiapos limitations"
+Write-Output "Increase the stack for cryptomines command for (cryptomines plots create) chiapos limitations"
 # editbin.exe needs to be in the path
-editbin.exe /STACK:8000000 daemon\chia.exe
+editbin.exe /STACK:8000000 daemon\cryptomines.exe
 Write-Output "   ---"
 
 $packageVersion = "$env:CRYPTOMINES_INSTALLER_VERSION"

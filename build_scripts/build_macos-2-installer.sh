@@ -67,7 +67,7 @@ fi
 echo electron-builder build --mac "${OPT_ARCH}" --config.productName="$PRODUCT_NAME" --config.mac.minimumSystemVersion="11"
 electron-builder build --mac "${OPT_ARCH}" --config.productName="$PRODUCT_NAME" --config.mac.minimumSystemVersion="11"
 LAST_EXIT_CODE=$?
-ls -l dist/mac*/chia.app/Contents/Resources/app.asar
+ls -l dist/mac*/cryptomines.app/Contents/Resources/app.asar
 
 # reset the package.json to the original
 mv package.json.orig package.json
@@ -81,10 +81,10 @@ mv dist/* ../../../build_scripts/dist/
 cd ../../../build_scripts || exit 1
 
 mkdir final_installer
-DMG_NAME="chia-${CRYPTOMINES_INSTALLER_VERSION}.dmg"
+DMG_NAME="cryptomines-${CRYPTOMINES_INSTALLER_VERSION}.dmg"
 if [ "$(arch)" = "arm64" ]; then
-  mv dist/"${DMG_NAME}" dist/chia-"${CRYPTOMINES_INSTALLER_VERSION}"-arm64.dmg
-  DMG_NAME=chia-${CRYPTOMINES_INSTALLER_VERSION}-arm64.dmg
+  mv dist/"${DMG_NAME}" dist/cryptomines-"${CRYPTOMINES_INSTALLER_VERSION}"-arm64.dmg
+  DMG_NAME=cryptomines-${CRYPTOMINES_INSTALLER_VERSION}-arm64.dmg
 fi
 mv dist/"$DMG_NAME" final_installer/
 
@@ -93,7 +93,7 @@ ls -lh final_installer
 if [ "$NOTARIZE" == true ]; then
 	echo "Notarize $DMG_NAME on ci"
 	cd final_installer || exit 1
-  notarize-cli --file="$DMG_NAME" --bundle-id pl.chiablockchain.blockchain \
+  notarize-cli --file="$DMG_NAME" --bundle-id pl.cryptominesblockchain.blockchain \
 	--username "$APPLE_NOTARIZE_USERNAME" --password "$APPLE_NOTARIZE_PASSWORD"
   echo "Notarization step complete"
 else
@@ -104,7 +104,7 @@ fi
 #
 # Ask for username and password. password should be an app specific password.
 # Generate app specific password https://support.apple.com/en-us/HT204397
-# xcrun altool --notarize-app -f Cryptomines-0.1.X.dmg --primary-bundle-id pl.chiablockchain.blockchain -u username -p password
+# xcrun altool --notarize-app -f Cryptomines-0.1.X.dmg --primary-bundle-id pl.cryptominesblockchain.blockchain -u username -p password
 # xcrun altool --notarize-app; -should return REQUEST-ID, use it in next command
 #
 # Wait until following command return a success message".
